@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+
+
+
+    {%  block root %}
+
+
+
+
+        <!-- form start -->
+        {#
+ {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            <!-- SELECT2 EXAMPLE -->
+
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+
+        #}
+<section class="content">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ title }}</h3>
+                <div class="box-body">
+                {{ form_start(form, {'attr': {} }) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+                </div>
+
+        </div>
+    </div>
+</section>
+
+    {%  endblock %}
+
+
+
