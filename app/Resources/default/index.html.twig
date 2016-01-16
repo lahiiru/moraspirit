@@ -1,64 +1,100 @@
 {% extends 'base.html.twig' %}
 
+{% block script%}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
 
+            $( "#member_facultyname" ).change(function() {
+                $("#member_dept_name").empty();
+                //$("#member_dept_name option[value='NON']").remove();
+
+                if( $( "#member_facultyname" ).val()=="arfac"){
+
+                    $('#member_dept_name').append($('<option>', {
+                        value: 'TCP',
+                        text: 'Town And Contry Planning'
+                    }));
+                    //
+
+                }
+
+                else if($( "#member_facultyname" ).val()=="efac"){
+                    $('#member_dept_name').append($('<option>', {
+                        value: 'CSE',
+                        text: 'Computer Science And Engineering'
+                    }));
+
+                }
+
+                else if($( "#member_facultyname" ).val()=="ndt"){
+
+                }
+
+
+
+            });
+        });
+    </script>
+{% endblock script %}
 
     {%  block root %}
 
 
-<section class="content">
+        <section class="content">
 
-    {%  if table == true %}
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Hover Data Table</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
+            {%  if table == true %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Hover Data Table</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
 
-                        {% for rows in col|batch(3) %}
+                                    {% for rows in col|batch(3) %}
 
-                                <tr>
+                                        <tr>
 
-                                    {% for column in rows %}
-                                        <th>{{ column }}</th>
+                                            {% for column in rows %}
+                                                <th>{{ column }}</th>
+                                            {% endfor %}
+
+                                        </tr>
+
                                     {% endfor %}
 
-                                </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for rows in row|batch(3) %}
+                                        {% for a in rows %}
+                                            <tr>
 
-                        {% endfor %}
+                                                {% for column in a %}
+                                                    <td>{{ column }}</td>
+                                                {% endfor %}
 
-                        </thead>
-                        <tbody>
-                        {% for rows in row|batch(3) %}
-                        {% for a in rows %}
-                            <tr>
-
-                                {% for column in a %}
-                                    <td>{{ column }}</td>
-                                {% endfor %}
-
-                            </tr>
-                        {% endfor %}
-                        {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
 
 
-                    </table>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+
                 </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
+            {% endif %}
 
-            </div>
-
-        </div>
-    {% endif %}
-
-        {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
-        <!-- form start -->
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            <!-- form start -->
 
 
             <!-- SELECT2 EXAMPLE -->
@@ -76,6 +112,8 @@
                     {{ form_end(form) }}
                 </div>
             </div>
-</section>
+        </section>
+
+
 
     {%  endblock %}
