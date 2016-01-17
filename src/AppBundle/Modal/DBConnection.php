@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class DBConnection
 {
     private $username = 'root';
-    private $password = '';
+    private $password = '1234';
     private $host = 'localhost';
     private $database_name = 'moraspirit';
 
@@ -31,6 +31,7 @@ class DBConnection
         }
     }
 
+    /*
     public function executeQuery($query){
         if($this->con != null){
             try{
@@ -42,7 +43,7 @@ class DBConnection
 
         }
     }
-
+    */
     public function closeConnection(){
         if($this->con != null){
             mysqli_close($this->con);

@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: bmCSoft
+// * User: bmCSoft
  * Date: 2015-12-16
  * Time: 4:57 PM
  */
@@ -54,7 +54,7 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
-            $db->executeQuery($query);
+         //   $db->executeQuery($query);
             $db->closeConnection();
         }
         else{
@@ -76,7 +76,7 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "DELETE FROM resource_alloc WHERE s_ID = '".$this->entity->getMemberId()."' AND r_ID = '".$this->entity->setResourceId()."'";
             }
-            $db->executeQuery($query);
+        //    $db->executeQuery($query);
             $db->closeConnection();
         }
         else{
@@ -94,6 +94,7 @@ class DBAccess
             if($this->entity_type == 'Member'){                           //
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
+                $FirstName=$obj->getFirstName();
                 $LastName=$obj-> getLastName();
                 $DeptName=$obj->getDeptName();
                 $RegisterDate=$obj->getRegisterDate();
@@ -133,7 +134,7 @@ class DBAccess
                 $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
 
             }
-            $db->executeQuery($query);
+           // $db->executeQuery($query);
             $db->closeConnection();
         }
         else{
@@ -185,7 +186,7 @@ class DBAccess
                     $resourceAlloc->$property($value);
                 }
                 $query = "SELECT * FROM dynamic_alloc WHERE r_ID ='".$resourceAlloc->getResourceId()."' AND s_ID = '".$resourceAlloc->getMemberId()."'";
-                $result = $db->executeQuery($query);
+                //$result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resourceAlloc->setComments($row[2]);
                     $resourceAlloc->setIssuedDate($row[3]);

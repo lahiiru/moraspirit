@@ -79,13 +79,12 @@ class DefaultController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $db= new DBAccess($member);
 
-            print_r($member);
-            print_r($member->getFacultyname());
+          // print_r($member);
+           // print_r($member->getFacultyname());
 
-            $db->insert();
+          $db->insert();
 
         }
 

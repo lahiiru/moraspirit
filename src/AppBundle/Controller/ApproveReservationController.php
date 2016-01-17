@@ -13,25 +13,56 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class ApproveReservationController extends  Controller
 {
 
+    /**
+     * @Route("/approve", name="approve")
+     *
+     */
+
+    public function contactAction(Request $request)
+    {
+        $data = array();
+        $form = $this->createFormBuilder($data)
+            ->add('query', 'text')
+            ->add('category', 'choice',
+                array('choices' => array(
+                    'judges'   => 'Judges',
+                    'interpreters' => 'Interpreters',
+                    'attorneys'   => 'Attorneys',
+                )))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+        }
+
+
+        $title= "New Event Registration";
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView(), 'title'=>$title ,'table'=>false
+        ));
+
+
+        // ... render the form
+    }
 
     public function  approveAction(Request $request)
     {
 
-        $title= "New Event Registration";
-
-        $form = $this->createFormBuilder()
-            ->add('task', TextType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
-            ->getForm();
 
 
-        return $this->render('default/index.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title ,'table'=>false
-        ));
+
+
+
+
 
 
 }}
