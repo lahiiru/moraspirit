@@ -8,15 +8,20 @@
 
 namespace AppBundle\Controller;
 
+
 use AppBundle\Entity\Sport;
-use AppBundle\Form\Type\EventType;
 use AppBundle\Form\Type\SportType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class SportController
+class SportController extends  Controller
 {
 
+
+    /**
+     * @Route("/register/sport", name="sport_register")
+     */
 
     public function sportAction(Request $request)
     {
