@@ -17,8 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class SportController extends  Controller
 {
-
-
     /**
      * @Route("/register/sport", name="sport_register")
      */

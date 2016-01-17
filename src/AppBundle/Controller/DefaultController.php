@@ -104,7 +104,7 @@ class DefaultController extends Controller
     public function resourceAllocation(Request $request)
     {
         // create a task and give it some dummy data for this example
-        $resourceallocation = new ResourceAllocation();
+        $resourceallocation = new DynamicAllocation();
         $title= "Resource Allocation";
         $form = $this->createForm(ResourceAllocType::class, $resourceallocation);
         $form->handleRequest($request);
@@ -242,6 +242,8 @@ class DefaultController extends Controller
 
 
     public  function  profileAction(){
+       // $user = $this->get('security.token_storage')->getToken()->getUser();
+
 
         return $this->render('Profile/profile.html.twig'
          );
