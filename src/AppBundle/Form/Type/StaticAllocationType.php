@@ -32,27 +32,22 @@ class StaticAllocationType  extends  AbstractType
         $builder
             ->add('day', DayType::class, ['label' => 'Day'])
             ->add('slotname' , ChoiceType::class ,array( 'mapped'=>false , 'choices'=>$this->timeslot()))
+            ->add('resourcetype' , ReserveResourceType::class ,['label' => 'Resource Type'])
             ->add('save', SubmitType::class, ['label' => 'Search']);
+
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
 
             $form = $event->getForm();
-
-
-            /*$form->add('resource_id', ChoiceType::class, array(
-                'mapped'  => false,
-                'choices' => $this->optionBuild(),
-                'label'=>'Resource ID'
-            ));
-            */
-
             $form->remove('save', SubmitType::class, ['label' => 'Search']);
 
 
-            $form->add('resourcetype', ReserveResourceType::class, array('label' => 'Type', 'attr' => array("disabled" => "true")))
-                ->add('resource_id', TextType::class, ['label' => 'Resource ID'])
-                ->add('issued_date', DateType::class, ['label' => 'Reserved Date'])
-                ->add('due_date', DateType::class, ['label' => 'Due Date'])
-                ->add('comments', TextType::class, ['label' => 'Comments']);
+            $form->add('day', ReserveResourceType::class, array('label' => 'Day', 'attr' => array("disabled" => "true")))
+                ->add('slotname', ReserveResourceType::class, array('label' => 'Slot Name', 'attr' => array("disabled" => "true")))
+                ->add('resourcetype', ReserveResourceType::class, array('label' => 'Resource Type', 'attr' => array("disabled" => "true")))
+                ->add('resourceid', TextType::class, ['label' => 'Resource ID'])
+                ->add('maximumplayers', TextType::class, ['label' => 'Maximum Players'])
+                ->add('sportid', TextType::class, ['label' => 'Sport ID'])
+                ;
 
             $form->add('save', SubmitType::class, ['label' => 'Submit']);
 
@@ -63,7 +58,7 @@ class StaticAllocationType  extends  AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\DynamicAllocation'
+            'data_class' => 'AppBundle\Entity\StaticAllocation'
         ));
     }
 

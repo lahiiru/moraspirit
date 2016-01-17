@@ -13,9 +13,28 @@ class StaticAllocation
 {
     protected  $slotname;
     protected $day;
+    protected $resourcetype;
     protected $sportid;
     protected $resourceid;
     protected $maximumplayers;
+
+    /**
+     * @return mixed
+     */
+    public function getResourcetype()
+    {
+        return $this->resourcetype;
+    }
+
+    /**
+     * @param mixed $resourcetype
+     */
+    public function setResourcetype($resourcetype)
+    {
+        $this->resourcetype = $resourcetype;
+    }
+
+
 
     /**
      * @return mixed
