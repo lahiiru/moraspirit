@@ -106,29 +106,6 @@ class DefaultController extends Controller
 
     }
 
-    /**
-     * @Route("/resource_registration", name="resource_registration")
-     */
-
-    public  function  resourceAction(Request $request){
-        $resource =new Resource();
-        $formtitle="New Resource  Registration";
-
-        $form = $this->createForm(ResourceType::class, $resource);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $db= new DBAccess($resource);
-            $db->insert();
-
-        }
-
-        return $this->render('default/index.html.twig', array(
-            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false
-        ));
-
-
-    }
 
     /**
      * @Route("/reservation", name="reservation")

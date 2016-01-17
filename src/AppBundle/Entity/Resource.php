@@ -15,23 +15,12 @@ class Resource
     protected $value;
     protected $description;
     protected $officer_id;
-    protected $type;
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+    protected $state;
+    protected $name;
+    protected $sportid;
 
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
+
 
     /**
      * @return mixed
@@ -48,7 +37,43 @@ class Resource
     {
         $this->state = $state;
     }
-    protected $state;
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSportid()
+    {
+        return $this->sportid;
+    }
+
+    /**
+     * @param mixed $sportid
+     */
+    public function setSportid($sportid)
+    {
+        $this->sportid = $sportid;
+    }
+
+
+
+
+
 
     /**
      * @return mixed
