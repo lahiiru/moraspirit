@@ -14,6 +14,42 @@ class Sport
 
     protected  $sportid;
     protected  $title;
+    protected $type;
+    protected $totalplayers;
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalplayers()
+    {
+        return $this->totalplayers;
+    }
+
+    /**
+     * @param mixed $totalplayers
+     */
+    public function setTotalplayers($totalplayers)
+    {
+        $this->totalplayers = $totalplayers;
+    }
+
+
 
     /**
      * @return mixed
@@ -47,20 +83,5 @@ class Sport
         $this->title = $title;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTotalplayer()
-    {
-        return $this->totalplayer;
-    }
 
-    /**
-     * @param mixed $totalplayer
-     */
-    public function setTotalplayer($totalplayer)
-    {
-        $this->totalplayer = $totalplayer;
-    }
-    protected $totalplayer;
 }
