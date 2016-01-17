@@ -13,8 +13,7 @@ use AppBundle\Entity\Resource;
 use AppBundle\Entity\ResourceAllocation;
 use AppBundle\Entity\Sport;
 
-$r=new DBAccess(null);
-$r->insert();
+
 
 class DBAccess
 {
