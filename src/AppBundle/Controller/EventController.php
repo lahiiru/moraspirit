@@ -13,19 +13,24 @@ use AppBundle\Entity\Event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\EventType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
+
 
 
 class EventController extends  Controller
 {
 
     /**
-     * @Route("/register/event", name="homepage")
+     * @Route("/register/event", name="event_register")
      */
+
     public function indexAction(Request $request)
     {
         $event = new Event();
         $title= "New Event Registration";
-        $date=date("Y-m-d") ;
 
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
