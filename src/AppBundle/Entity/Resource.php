@@ -16,7 +16,7 @@ class Resource
     protected $description;
     protected $officer_id;
     protected $type;
-
+    protected $state;
     /**
      * @return mixed
      */
@@ -48,7 +48,6 @@ class Resource
     {
         $this->state = $state;
     }
-    protected $state;
 
     /**
      * @return mixed
