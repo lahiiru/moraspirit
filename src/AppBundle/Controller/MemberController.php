@@ -13,14 +13,20 @@ use AppBundle\Entity\Member;
 use AppBundle\Form\Type\MemberType;
 use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class MemberController extends  Controller
 {
 
+    /**
+     * @Route("/register/member", name="student_nregistration")
+     */
 
     public function newmemberAction(Request $request)
     {
+
+
         // create a task and give it some dummy data for this example
         $member = new Member();
         $title= "Student Registration";
@@ -38,12 +44,7 @@ class MemberController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $db= new DBAccess($member);
-
-            print_r($member);
-            print_r($member->getFacultyname());
-
             $db->insert();
 
         }
