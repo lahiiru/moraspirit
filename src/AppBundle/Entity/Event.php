@@ -14,9 +14,131 @@ class Event
     protected $eventid;
     protected  $eventname;
     protected  $budget;
+    protected  $eventtype;
+    protected $startdate;
+    protected  $enddate;
+    protected $starttime;
+    protected $endtime;
+    protected $location;
+    protected $description;
     protected  $date;
     protected $totalparticipant;
     protected $oid;
+
+
+    /**
+     * @return mixed
+     */
+    public function getEventtype()
+    {
+        return $this->eventtype;
+    }
+
+    /**
+     * @param mixed $eventtype
+     */
+    public function setEventtype($eventtype)
+    {
+        $this->eventtype = $eventtype;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStartdate()
+    {
+        return $this->startdate;
+    }
+
+    /**
+     * @param mixed $startdate
+     */
+    public function setStartdate($startdate)
+    {
+        $this->startdate = $startdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnddate()
+    {
+        return $this->enddate;
+    }
+
+    /**
+     * @param mixed $enddate
+     */
+    public function setEnddate($enddate)
+    {
+        $this->enddate = $enddate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStarttime()
+    {
+        return $this->starttime;
+    }
+
+    /**
+     * @param mixed $starttime
+     */
+    public function setStarttime($starttime)
+    {
+        $this->starttime = $starttime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEndtime()
+    {
+        return $this->endtime;
+    }
+
+    /**
+     * @param mixed $endtime
+     */
+    public function setEndtime($endtime)
+    {
+        $this->endtime = $endtime;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param mixed $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+
 
     /**
      * @return mixed

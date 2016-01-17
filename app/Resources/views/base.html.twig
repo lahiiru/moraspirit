@@ -25,6 +25,9 @@
     <link href="{{ asset('bundles/dist/css/AdminLTE.min.css') }}" type="text/css" rel="stylesheet" />
     <link href="{{ asset('bundles/bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
 
+    {% block script %}
+    {% endblock script %}
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" >
@@ -514,20 +517,6 @@
 
 
             {% block root %}
-                <li class="user-body">
-                    <div class="row">
-                        <div class="col-xs-4 text-center">
-                            <a href="#">Followers</a>
-                        </div>
-                        <div class="col-xs-4 text-center">
-                            <a href="#">Sales</a>
-                        </div>
-                        <div class="col-xs-4 text-center">
-                            <a href="#">Friends</a>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </li>
 
             {% endblock %}
         </section>
