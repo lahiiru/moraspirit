@@ -24,6 +24,23 @@ class Member
     protected $bloodgroup;
     protected $nic;
     protected $address;
+    protected $index_nu;
+
+    /**
+     * @return mixed
+     */
+    public function getIndexNu()
+    {
+        return $this->index_nu;
+    }
+
+    /**
+     * @param mixed $index_nu
+     */
+    public function setIndexNu($index_nu)
+    {
+        $this->index_nu = $index_nu;
+    }
 
     /**
      * @return mixed

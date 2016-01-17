@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class DBConnection
 {
     private $username = 'root';
-    private $password = '1234';
+    private $password = '';
     private $host = 'localhost';
     private $database_name = 'moraspirit';
 
@@ -22,12 +22,12 @@ class DBConnection
 
     public function connect(){
         $link = mysqli_connect($this->host,$this->username,$this->password,$this->database_name);
-        if(!$link){
-            return false;
+        if(empty($link)){
+            return  null;
         }
         else{
             $this->con = $link;
-            return true;
+            return $link;
         }
     }
 
