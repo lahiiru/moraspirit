@@ -153,7 +153,7 @@ class DBAccess
 
             }
 
-            elseif($this->entity_type=='event'){
+            elseif($this->entity_type=='Event'){
 
                 $obj=$this->entity;
 
