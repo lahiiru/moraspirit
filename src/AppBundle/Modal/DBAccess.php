@@ -12,15 +12,18 @@ use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\ResourceAllocation;
 
+$r=new DBAccess(null);
+$r->insert();
+
 class DBAccess
 {
     private $entity_type;
     private $entity;
 
     function __construct($entity){
-        if ($entity != null){
+        if ($entity != null) {
             $this->entity = $entity;
-            switch(get_class($entity)){
+            switch (get_class($entity)) {
                 case 'AppBundle\Entity\Member':
                     $this->entity_type = 'Member';
                     break;
@@ -82,18 +85,53 @@ class DBAccess
     }
 
     public function insert(){
+
+
         $db=new DBConnection();
-        if($db->connect()){
+        $link=$db->connect();
+        if($link != null){
             $query = "";
-            if($this->entity_type == 'Member'){
-                $query = "INSERT INTO member (s_ID,first_name,last_name,dept_name,register_date,email,mobile,gender,faculty,birthday,bloodgroup,nic,address) VALUES ('".$this->entity->getStudentId()."','".$this->entity->getFirstName()."','".$this->entity->getLastName()."','".$this->entity->getDeptName()."','".$this->entity->getRegisterDate()."','".$this->entity->getEmail()."','".$this->entity->getMobile()."'".$this->entity->getGender()."','".$this->entity->getFacultyname()."','".$this->entity->getBirthday()."','".$this->entity->getBloodgroup()."','".$this->entity->getNic()."','".$this->entity->getAddress()."')";
+            if($this->entity_type == 'Member'){                           //
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj=$this->entity;
+                $LastName=$obj-> getLastName();
+                $DeptName=$obj->getDeptName();
+                $RegisterDate=$obj->getRegisterDate();
+                $Email=$obj->getEmail();
+                $Mobile=$obj->getMobile();
+                $Gender=$obj->getGender();
+                $Facultyname=$obj->getFacultyname();
+                $Birthday=$obj->getBirthday();
+                $Bloodgroup=$obj->getBloodgroup();
+                $Nic=$obj->getNic();
+                $Address=$obj->getAddress();
+                $IndexNu=$obj->getIndexNu();
+
+
+                $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,blood_group,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
+                $query->execute();
 
             }
             elseif($this->entity_type == 'Resource'){
-                $query = "INSERT INTO resource (r_ID,value,description,o_ID) VALUES ('".$this->entity->getResourceId()."','".$this->entity->getValue()."','".$this->entity->getDescription()."','".$this->entity->getOfficerId()."')";
+                $obj=$this->entity;
+
+                $value=$obj->getValue();
+                $state=$obj->getState();
+                $type=$obj->getType();
+                $description=$obj->getDescription();
+                $o_id=$obj->getOfficerId();
+
+                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
+                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
+
+
+
             }
-            elseif($this->entity_type=='ResourceAllocation'){
-                $query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
+            elseif($this->entity_type=='DyanamicAllocation'){
+                //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
+                $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
+
             }
             $db->executeQuery($query);
             $db->closeConnection();
