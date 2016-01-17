@@ -1,5 +1,5 @@
 <?php
-//nu
+//nub
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DynamicAllocation;
