@@ -71,7 +71,7 @@ class DBAccess
                 $query = "DELETE FROM member WHERE s_ID='".$this->entity->getStudentId()."'";
             }
             elseif($this->entity_type == 'Resource'){
-                $query = "DELETE FROM resource WHERE r_ID = '".$this->entity->setResourceId()."'";
+                $query = "DELETE FROM resource WHERE r_ID = '".$this->entity->getResourceId()."'";
             }
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "DELETE FROM resource_alloc WHERE s_ID = '".$this->entity->getMemberId()."' AND r_ID = '".$this->entity->setResourceId()."'";
