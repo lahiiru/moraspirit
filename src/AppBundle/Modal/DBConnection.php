@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class DBConnection
 {
     private $username = 'root';
-    private $password = '1234';
+    private $password = '';
     private $host = 'localhost';
     private $database_name = 'moraspirit';
 

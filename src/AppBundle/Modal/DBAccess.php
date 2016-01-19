@@ -1,19 +1,16 @@
 <?php
 /**
  * Created by PhpStorm.
-// * User: bmCSoft
+ * User: bmCSoft
  * Date: 2015-12-16
  * Time: 4:57 PM
  */
 
 namespace AppBundle\Modal;
 
-use AppBundle\Entity\Member;
-use AppBundle\Entity\Resource;
-use AppBundle\Entity\Sport;
+use AppBundle\Entity;
 
-$r=new DBAccess(null);
-$r->insert();
+
 
 class DBAccess
 {
@@ -37,7 +34,7 @@ class DBAccess
                     $this->entity_type = 'Instuctor';
                     break;
                 case 'AppBundle\Entity\Sport':
-                    $this->entity_type = 'Instuctor';
+                    $this->entity_type = 'Sport';
                     break;
             }
         }
@@ -46,7 +43,8 @@ class DBAccess
 
     public function update(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link =  $db->connect();
+        if($link!=null){
             $query ="";
             if($this->entity_type == 'Member'){
                 $query = "UPDATE member SET first_name='".$this->entity->getFirstName()."',last_name='".$this->entity->getLastName()."',dept_name='".$this->entity->getDeptName()."',register_date='".$this->entity->getRegisterDate()."',email='".$this->entity->getEmail()."',mobile='".$this->entity->getMobile()."' WHERE s_ID = '".$this->entity->getStudentId()."'";
@@ -68,7 +66,8 @@ class DBAccess
 
     public function delete(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link = $db->connect();
+        if($link != null){
             $query="";
             if($this->entity_type == 'Member'){
                 $query = "DELETE FROM member WHERE s_ID='".$this->entity->getStudentId()."'";
@@ -94,7 +93,7 @@ class DBAccess
         $link=$db->connect();
         if($link != null){
             $query = "";
-            if($this->entity_type == 'Member'){                           //
+            if($this->entity_type == 'Member'){
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $FirstName=$obj->getFirstName();
@@ -110,7 +109,6 @@ class DBAccess
                 $Nic=$obj->getNic();
                 $Address=$obj->getAddress();
                 $IndexNu=$obj->getIndexNu();
-
 
                 $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,blood_group,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
@@ -141,11 +139,14 @@ class DBAccess
             {
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
-                print_r($obj);
-                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?,?)");
-                $query->bind_param("sss",$obj->getTitle(),$obj->getTotalplayers(),$obj->getType());
-                $query->execute();
+                $title = $obj->getTitle();
+                $totPlayers = $obj->getTotalPlayers();
+                $type = $obj->getType();
 
+                print ("Title : " + $title + " tp : "+$totPlayers+" type : "+$type);
+                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?)");
+                $query->bind_param("sss",$title,$totPlayers,$type);
+                $query->execute();
             }
 
            // $db->executeQuery($query);
@@ -158,7 +159,8 @@ class DBAccess
 
     public function getDetail(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link = $db->connect();
+        if($link != null){
             if($this->entity_type == 'Member'){
                 $member = new Member();
                 foreach($this->entity as $property => $value){

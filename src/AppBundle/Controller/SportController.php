@@ -36,8 +36,6 @@ class SportController extends  Controller
             $db= new DBAccess($sport);
             print_r($sport);
             $db->insert();
-
-
         }
 
         return $this->render('default/index.html.twig', array(

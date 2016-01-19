@@ -43,12 +43,7 @@ class DynamicAllocationController
                 return $this->render('default/index.html.twig', array(
                     'form' => $form->createView(),'title'=>$formtitle, 'row'=>$row,'col'=>$col ,'table'=>true
                 ));
-
-
             }
-
-
-
         }
 
 
