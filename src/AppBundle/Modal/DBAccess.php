@@ -57,6 +57,10 @@ class DBAccess
             elseif($this->entity_type=='Entity'){
                 $query="UPDATE event SET event_name='".$this->entity->getEventname()."'tot_participants'".$this->entity->getTotalparticipant()."'event_type'".$this->entity->getEventtype()."'start_date'".$this->entity->getStartdate()."'end_date'".$this->entity->getEnddate()."'start_time'".$this->entity->getStarttime()."'end_time'".$this->entity->getEndtime()."'budget'".$this->entity->getBudget()."'description'".$this->entity->getDescription()."'location'".$this->entity->getLocation()."'i_id'".$this->entity->getEventIncharge()."'";
             }
+            elseif($this->entity_type=='Sport'){
+                $query="UPDATE sport SET title='".$this->entity->getTitle()."'tot_players'".$this->entity->getTotalplayers()."'type'".$this->entity->getType()."'";
+            }
+            elseif($this->entity_type=='')
          //   $db->executeQuery($query);
             $db->closeConnection();
         }
@@ -129,7 +133,7 @@ class DBAccess
                 $name=$obj->getName();
 
                 $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,reg_date,name) VALUES (?,?,?,?,?,?,?)");
-                $query->bind_param("dsssiss",$value,$state,$type,$description,$o_id,$regDate,$name);
+                $query->bind_param("dsssiss",$value,$type,$state,$description,$o_id,$regDate,$name);
 
 
 
