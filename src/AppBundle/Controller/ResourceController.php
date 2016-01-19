@@ -34,8 +34,8 @@ class ResourceController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $db= new DBAccess($resource);
-            $db->insert();
+           // $db= new DBAccess($resource);
+            //$db->insert();
 
         }
 
