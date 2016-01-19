@@ -122,9 +122,10 @@ class DBAccess
                 $type=$obj->getType();
                 $description=$obj->getDescription();
                 $o_id=$obj->getOfficerId();
+                $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
-                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
+                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,name) VALUES (?,?,?,?,?,?)");
+                $query->bind_param("dsssis",$value,$state,$type,$description,$o_id,$name);
                 $query->execute();
 
 
