@@ -19,7 +19,7 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         // make a call to your webservice here
-        return new User("$username", password_hash("1234", PASSWORD_BCRYPT, array('cost' => 13)), "", ["ROLE_ADMIN"]);
+        return new User("$username", password_hash("1234", PASSWORD_BCRYPT, array('cost' => 13)), "1234", ["ROLE_USER","ROLE_ADMIN"]);
 /*
         throw new UsernameNotFoundException(
             sprintf('Username "%s" does not exist.', $username)

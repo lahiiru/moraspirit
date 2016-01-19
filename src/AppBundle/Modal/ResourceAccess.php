@@ -17,20 +17,26 @@ public static function getResourceAvalability($type){
     $db=new DBConnection();
 
     if($db->connect()){
-        $q="CREATE VIEW avalabil AS
-            SELECT r_ID,type, description FROM resource WHERE state='AVL' AND type='".$type."'";
-        //$q->bind_param(":type", $type);
-        $db->executeQuery($q);
-        $query = "SELECT * FROM avalabil";
-        $result = $db->executeQuery($query);
-        $resultrow=array();
-        while($row = mysqli_fetch_assoc($result)){
-            array_push($resultrow,$row);
+        $conn=new DBConnection();
+        $link=$conn->connect();
+
+        if(!($link==null)){
+            $link->query("CREATE VIEW avalabil AS
+            SELECT r_ID,type, description FROM resource WHERE state='AVL' AND type='".$type."'");
+            $query = "SELECT * FROM avalabil";
+            $result = $link->query($query);
+            $resultrow=array();
+            while($row = mysqli_fetch_assoc($result)){
+                array_push($resultrow,$row);
+            }
+            $q="DROP VIEW avalabil";
+            $link->query($q);
+            $db->closeConnection();
+            return $resultrow;
         }
-        $q="DROP VIEW avalabil";
-        $db->executeQuery($q);
-        $db->closeConnection();
-        return $resultrow;
+
+
+
 
     }
 }
