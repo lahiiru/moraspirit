@@ -36,7 +36,7 @@ class EventController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event = new Event();
-
+            print_r($form->getData());
             $formData = $form->getData();
             $event->setEventname($formData["eventname"]);
             $event->setTotalparticipant($formData["totalparticipant"]);
@@ -48,6 +48,8 @@ class EventController extends  Controller
             $event->setBudget($formData["budget"]);
             $event->setDescription($formData["description"]);
             $event->setLocation($formData["location"]);
+            $event->setEventIncharge($formData["eventincharge"]);
+
 
             $db= new DBAccess($event);
             $db->insert();

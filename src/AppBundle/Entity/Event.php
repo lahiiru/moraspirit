@@ -22,7 +22,23 @@ class Event
     protected $description;
     protected  $date;
     protected $totalparticipant;
+    protected $eventIncharge;
 
+
+    /**
+     * @return mixed
+     */
+    public function getEventIncharge(){
+        return $this->eventIncharge;
+    }
+
+
+    /**
+     * @param mixed $eventIncharge
+     */
+    public function setEventIncharge($eventIncharge){
+        $this->eventIncharge = $eventIncharge;
+    }
 
     /**
      * @return mixed
