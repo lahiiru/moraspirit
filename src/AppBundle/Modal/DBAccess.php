@@ -151,6 +151,17 @@ class DBAccess
                 $query->bind_param("iiiss",$studentID,$instructorID,$sportID,$slotName,$day);
                 $query->execute();
             }
+
+            elseif($this->entity_type=='Officer'){
+                $memberID=$this->entity->getMemberId();
+                $roles=$this->entity->getRoles();
+                $appointedDate=$this->entity->getAppointedDate();
+
+                $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,roles) VALUES (?,?,?)");
+                $query->bind_param("iss",$memberID,$appointedDate,$roles);
+                $query->execute();
+
+            }
            // $db->executeQuery($query);
             $db->closeConnection();
         }
