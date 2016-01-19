@@ -54,6 +54,9 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
+            elseif($this->entity_type=='Entity'){
+                $query="UPDATE event "
+            }
          //   $db->executeQuery($query);
             $db->closeConnection();
         }
@@ -122,9 +125,10 @@ class DBAccess
                 $type=$obj->getType();
                 $description=$obj->getDescription();
                 $o_id=$obj->getOfficerId();
+                $regDate=$obj->getreg_date();
 
-                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
-                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
+                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?,?)");
+                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id,$regDate);
 
 
 
