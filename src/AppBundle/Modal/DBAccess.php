@@ -9,11 +9,13 @@
 namespace AppBundle\Modal;
 
 use AppBundle\Entity\Member;
+use AppBundle\Entity\Officer;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\ResourceAllocation;
 use AppBundle\Entity\Sport;
+use AppBundle\Entity\Instuctor;
 
-
+$c=new DBAccess(null);
 
 class DBAccess
 {
@@ -38,6 +40,12 @@ class DBAccess
                     break;
             }
         }
+        //testing area
+
+        $this->testFunction();
+
+
+        //end testing area
 
     }
 
@@ -91,7 +99,7 @@ class DBAccess
         $link=$db->connect();
         if($link != null){
             $query = "";
-            if($this->entity_type == 'Member5'){                           //
+            if($this->entity_type == 'Member'){                           //
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $LastName=$obj-> getLastName();
@@ -175,7 +183,7 @@ class DBAccess
                 $query->execute();
             }
 
-            if($this->entity_type=='Sport'){               //
+            elseif($this->entity_type=='Sport'){               //
                 //test object
                 $test=new Sport();
                 $test->setType("nuwan");
@@ -196,6 +204,24 @@ class DBAccess
 
             //$db->executeQuery($query);
             $db->closeConnection();
+        }
+        //insert data to instructor table
+        elseif($this->entity_type =='Instructor'){
+            $obj=$this->entity;
+
+            $firtName=$obj->getFirstName();
+            $lastName=$obj->getLastName();
+            $institute=$obj->getInstitute();
+
+            $query=$link->prepare("INSERT INTO instructor(first_name,last_name,institute) VALUES(?,?,?)");
+            $query->bind_param("sss",$firtName,$lastName,$institute);
+            $query->execute();
+        }
+        //insert to officer table
+        elseif($this->entity_type =='Officer'){//
+            $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,role) VALUES(?,?,?)");
+            $query->bind_param("iss",$this->entity->getMemberId(),$this->entity->getAppointedDate(),$this->entity->getRoles());
+            $query->execute();
         }
 
 
@@ -263,4 +289,23 @@ class DBAccess
             echo "Cannot connect to database";
         }
     }
+
+    public function testFunction(){
+        $db=new DBConnection();
+        $link=$db->connect();
+
+        echo "awa";
+
+        $test=new Officer();
+        $test->setMemberId(5);
+        $test->setAppointedDate('2003/23/23');
+        $test->setRoles("nuwan test");
+
+        $this->entity=$test;
+
+        $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,role) VALUES(?,?,?)");
+        $query->bind_param("iss",$this->entity->getMemberId(),$this->entity->getAppointedDate(),$this->entity->getRoles());
+        $query->execute();
+    }
 }
+
