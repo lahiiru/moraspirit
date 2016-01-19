@@ -55,7 +55,7 @@ class DBAccess
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
             elseif($this->entity_type=='Entity'){
-                $query="UPDATE event "
+                $query="UPDATE event SET event_name='".$this->entity->getEventname()."'tot_participants'".$this->entity->getTotalparticipant()."'event_type'".$this->entity->getEventtype()."'start_date'".$this->entity->."'end_date'".$this->entity->."'start_time'".$this->entity->."'end_time'".$this->entity->.
             }
          //   $db->executeQuery($query);
             $db->closeConnection();
@@ -190,7 +190,7 @@ class DBAccess
                     $resourceAlloc->$property($value);
                 }
                 $query = "SELECT * FROM dynamic_alloc WHERE r_ID ='".$resourceAlloc->getResourceId()."' AND s_ID = '".$resourceAlloc->getMemberId()."'";
-                //$result = $db->executeQuery($query);
+                $result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resourceAlloc->setComments($row[2]);
                     $resourceAlloc->setIssuedDate($row[3]);
