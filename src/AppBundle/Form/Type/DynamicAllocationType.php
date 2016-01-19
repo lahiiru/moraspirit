@@ -38,14 +38,7 @@ class DynamicAllocationType  extends  AbstractType
         ;
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
 
-
-            //$product = $event->getData();
-
-            //$type=$product->getResourcetype();
-           // print_r($product);
             $form = $event->getForm();
-
-
 
             /*$form->add('resource_id', ChoiceType::class, array(
                 'mapped'  => false,
