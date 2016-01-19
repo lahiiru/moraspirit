@@ -126,9 +126,10 @@ class DBAccess
                 $description=$obj->getDescription();
                 $o_id=$obj->getOfficerId();
                 $regDate=$obj->getreg_date();
+                $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?,?)");
-                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id,$regDate);
+                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,name) VALUES (?,?,?,?,?,?,?)");
+                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id,$regDate,$name);
 
 
 
