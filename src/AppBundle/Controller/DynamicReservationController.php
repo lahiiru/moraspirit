@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Controller;
+
 use AppBundle\Entity\DynamicAllocation;
 use AppBundle\Form\Type\DynamicAllocationType;
 use AppBundle\Modal\ResourceAccess;
@@ -31,6 +32,7 @@ class DynamicReservationController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
+            print_r($data);
 
 
             if ($data->getResourcetype() == 'NON') {
@@ -38,7 +40,8 @@ class DynamicReservationController extends  Controller
                     'form' => $form->createView(), 'title' => $formtitle, 'table' => false
                 ));
 
-            } else if (!($data->getResourcetype() == 'NON')) {
+            }
+            else if (!($data->getResourcetype() == 'NON')&&($data->getResourceId()==null)) {
 
                 if ($data->getResourcetype() == 'EQP') {
                     $row = ResourceAccess::getResourceAvalability('EQP');
@@ -50,6 +53,14 @@ class DynamicReservationController extends  Controller
                 }
                 return $this->render('default/index.html.twig', array(
                     'form' => $form->createView(), 'title' => $formtitle, 'row' => $row, 'col' => $col, 'table' => true
+                ));
+
+
+            }
+            else if (!($data->getResourcetype() == 'NON')&& !($data->getResourceId()==null)) {
+
+                return $this->render('Profile/profile.html.twig', array(
+                    'form' => $form->createView(), 'title' => $formtitle, 'table' => false
                 ));
 
 

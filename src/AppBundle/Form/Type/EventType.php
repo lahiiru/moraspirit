@@ -32,6 +32,7 @@ class EventType extends  AbstractType
             ->add('enddate', TextType::class ,array('label'=>'End Date'))
             ->add('starttime', DateType::class ,array('label'=>'Start Time'))
             ->add('endtime', DateType::class ,array('label'=>'End Time'))
+            ->add('eventincharge',TextType::class ,array('label'=>'Event Incharge'))
             ->add('totalparticipant', TextType::class ,array('label'=>'Toatal Partticipant'))
             ->add('budget', TextType::class ,array('label'=>'Budget'))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')));
@@ -41,9 +42,15 @@ class EventType extends  AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Event'
+
         ));
 
     }
+
+    private function getOfficers()
+    {
+
+    }
+
 
 }
