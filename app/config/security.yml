@@ -4,13 +4,13 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     encoders:
-            AppBundle\Entity\User:
-                algorithm: bcrypt
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 13
+
     providers:
-        our_db_provider:
-                    entity:
-                        class: AppBundle:User
-                        property: username
+        webservice:
+            id: app.webservice_user_provider
                         # if you're using multiple entity managers
 
         in_memory:
