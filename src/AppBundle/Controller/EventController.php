@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Event;
+use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\EventType;
@@ -34,9 +35,22 @@ class EventController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $event = new Event();
 
-            print_r($form->getData());
+            $formData = $form->getData();
+            $event->setEventname($formData["eventname"]);
+            $event->setTotalparticipant($formData["totalparticipant"]);
+            $event->setEventtype($formData["eventtype"]);
+            $event->setStartdate($formData["startdate"]);
+            $event->setEnddate($formData["enddate"]);
+            $event->setStarttime($formData["starttime"]);
+            $event->setEndtime($formData["endtime"]);
+            $event->setBudget($formData["budget"]);
+            $event->setDescription($formData["description"]);
+            $event->setLocation($formData["location"]);
 
+            $db= new DBAccess($event);
+            $db->insert();
         }
 
         return $this->render('default/index.html.twig', array(

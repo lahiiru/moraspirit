@@ -36,6 +36,9 @@ class DBAccess
                 case 'AppBundle\Entity\Sport':
                     $this->entity_type = 'Sport';
                     break;
+                case 'AppBundle\Entity\Event':
+                    $this->entity_type = 'Event';
+                    break;
             }
         }
 
@@ -113,7 +116,6 @@ class DBAccess
                 $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,blood_group,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
                 $query->execute();
-
             }
             elseif($this->entity_type == 'Resource'){
                 $obj=$this->entity;
@@ -126,7 +128,6 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
                 $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
-
 
 
             }
@@ -142,12 +143,31 @@ class DBAccess
                 $title = $obj->getTitle();
                 $totPlayers = $obj->getTotalPlayers();
                 $type = $obj->getType();
-
-                print ("Title : " + $title + " tp : "+$totPlayers+" type : "+$type);
                 $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?)");
                 $query->bind_param("sss",$title,$totPlayers,$type);
                 $query->execute();
             }
+            elseif($this->entity_type == 'Event'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj = $this->entity;
+                $eName = $obj->getEventName();
+                $tParticipants = $obj->getTotalparticipant();
+                $eType = $obj->getEventtype();
+                $startDate = $obj->getStartdate();
+                $endDate = $obj->getEndDate();
+                $startTime = $obj->getStartTime();
+                $endTime = $obj->getEndTime();
+                $budget  = $obj-> getBudget();
+                $description = $obj->getDescription();
+                $location = $obj->getLocation();
+
+                $query =$link->prepare("INSERT INTO event (event_name,tot_participants,event_type,start_date,end_date,start_time,end_time,budget,description,location) VALUES (?,?,?,?,?,?,?,?,?,?)");
+                $query->bind_param("sisssssdss",$eName,$tParticipants,$eType,$startDate,$endDate,$startTime,$endTime,$budget,$description,$location);
+                $query->execute();
+
+
+            }
+
 
            // $db->executeQuery($query);
             $db->closeConnection();
