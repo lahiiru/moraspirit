@@ -1,19 +1,16 @@
 <?php
 /**
  * Created by PhpStorm.
-// * User: bmCSoft
+ * User: bmCSoft
  * Date: 2015-12-16
  * Time: 4:57 PM
  */
 
 namespace AppBundle\Modal;
 
-use AppBundle\Entity\Member;
-use AppBundle\Entity\Resource;
-use AppBundle\Entity\Sport;
+use AppBundle\Entity;
 
-$r=new DBAccess(null);
-$r->insert();
+
 
 class DBAccess
 {
@@ -37,7 +34,10 @@ class DBAccess
                     $this->entity_type = 'Instuctor';
                     break;
                 case 'AppBundle\Entity\Sport':
-                    $this->entity_type = 'Instuctor';
+                    $this->entity_type = 'Sport';
+                    break;
+                case 'AppBundle\Entity\Event':
+                    $this->entity_type = 'Event';
                     break;
             }
         }
@@ -46,7 +46,8 @@ class DBAccess
 
     public function update(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link =  $db->connect();
+        if($link!=null){
             $query ="";
             if($this->entity_type == 'Member'){
                 $query = "UPDATE member SET first_name='".$this->entity->getFirstName()."',last_name='".$this->entity->getLastName()."',dept_name='".$this->entity->getDeptName()."',register_date='".$this->entity->getRegisterDate()."',email='".$this->entity->getEmail()."',mobile='".$this->entity->getMobile()."' WHERE s_ID = '".$this->entity->getStudentId()."'";
@@ -68,7 +69,8 @@ class DBAccess
 
     public function delete(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link = $db->connect();
+        if($link != null){
             $query="";
             if($this->entity_type == 'Member'){
                 $query = "DELETE FROM member WHERE s_ID='".$this->entity->getStudentId()."'";
@@ -94,7 +96,7 @@ class DBAccess
         $link=$db->connect();
         if($link != null){
             $query = "";
-            if($this->entity_type == 'Member'){                           //
+            if($this->entity_type == 'Member'){
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $FirstName=$obj->getFirstName();
@@ -111,11 +113,9 @@ class DBAccess
                 $Address=$obj->getAddress();
                 $IndexNu=$obj->getIndexNu();
 
-
                 $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,blood_group,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
                 $query->execute();
-
             }
             elseif($this->entity_type == 'Resource'){
                 $obj=$this->entity;
@@ -130,7 +130,6 @@ class DBAccess
                 $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
 
 
-
             }
             elseif($this->entity_type=='DyanamicAllocation'){
                 //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
@@ -141,12 +140,42 @@ class DBAccess
             {
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
-                print_r($obj);
-                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?,?)");
-                $query->bind_param("sss",$obj->getTitle(),$obj->getTotalplayers(),$obj->getType());
+                $title = $obj->getTitle();
+                $totPlayers = $obj->getTotalPlayers();
+                $type = $obj->getType();
+                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?)");
+                $query->bind_param("sss",$title,$totPlayers,$type);
                 $query->execute();
+            }
+            elseif($this->entity_type == 'Event'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj = $this->entity;
+                $eName = $obj->getEventName();
+                $tParticipants = $obj->getTotalparticipant();
+                $eType = $obj->getEventtype();
+                $startDate = $obj->getStartdate();
+                $endDate = $obj->getEndDate();
+                $startTime = $obj->getStartTime();
+                $endTime = $obj->getEndTime();
+                $budget  = $obj-> getBudget();
+                $description = $obj->getDescription();
+                $location = $obj->getLocation();
+                $eventIncharge = $obj->getEventIncharge();
+
+
+                // Set autocommit to off
+                mysqli_autocommit($link,FALSE);
+                mysqli_query($link,"INSERT INTO event (event_name,tot_participants,event_type,start_date,end_date,start_time,end_time,budget,description,location)
+                VALUES ('".$eName."','".$tParticipants."','".$eType."','".$startDate."','".$endDate."','".$startTime."','".$endTime."','".$budget."','".$description."','".$location."')");
+
+                $last_id = mysqli_insert_id($link);
+
+                mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$last_id."','".$eventIncharge."')");
+                mysqli_commit($link);
+
 
             }
+
 
            // $db->executeQuery($query);
             $db->closeConnection();
@@ -158,7 +187,8 @@ class DBAccess
 
     public function getDetail(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link = $db->connect();
+        if($link != null){
             if($this->entity_type == 'Member'){
                 $member = new Member();
                 foreach($this->entity as $property => $value){
