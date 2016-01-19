@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
 
-class EnrollEventType extends  AbstractType
+class EnrollmentType extends  AbstractType
 {
 
 
@@ -34,7 +34,7 @@ class EnrollEventType extends  AbstractType
                 'choices' => $this->getEventId(),
                 'label' => 'Event'
             ))
-            ->add('save', SubmitType::class, array('label' => 'Se', 'attr' => array('class' => 'btn btn-block btn-success btn-lg')));
+            ->add('save', SubmitType::class, array('label' => 'Submit', 'attr' => array('class' => 'btn btn-block btn-success btn-lg')));
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
 
@@ -62,7 +62,7 @@ class EnrollEventType extends  AbstractType
 
     private function getEventId()
     {
-        return array('Spitzer' => 1, 'Noeya' => 2, 'Inter University Game' => 3);
+        return array('Event' => 1, 'Sport' => 2);
 
     }
 
