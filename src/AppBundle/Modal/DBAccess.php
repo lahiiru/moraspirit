@@ -125,13 +125,34 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
                 $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
-
+                $query->execute();
 
 
             }
+
+            elseif($this->entity_type=='EventIncharge'){
+                $eventID=$this->entity->getEventID;
+                $officerID=$this->entity->getOfficerID();
+
+                $query=$link->prepare("INSERT INTO event_incharge(o_id,event_id) VALUES(?,?)");
+                $query->bind_param($eventID,$officerID);
+                $query->execute();
+            }
+
+            elseif($this->entity_type=='EventMember'){
+                $studentId=$this->entity->getEventid();
+                $eventId=$this->entity->getStudentid();
+
+                $query=$link->prepare("INSERT INTO event_member(s_id,event_id) VALUES(?,?)");
+                $query->bind_param($studentId,$eventId);
+                $query->execute();
+            }
+
+
             elseif($this->entity_type=='DyanamicAllocation'){
                 //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
                 $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
+
 
             }
            // $db->executeQuery($query);
