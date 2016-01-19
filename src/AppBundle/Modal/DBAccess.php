@@ -20,7 +20,6 @@ class DBAccess
     function __construct($entity){
         if ($entity != null) {
             $this->entity = $entity;
-            print(get_class(($entity)));
             switch (get_class($entity)) {
                 case 'AppBundle\Entity\Member':
                     $this->entity_type = 'Member';
