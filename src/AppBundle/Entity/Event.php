@@ -11,7 +11,6 @@ namespace AppBundle\Entity;
 
 class Event
 {
-    protected $eventid;
     protected  $eventname;
     protected  $budget;
     protected  $eventtype;
@@ -23,8 +22,23 @@ class Event
     protected $description;
     protected  $date;
     protected $totalparticipant;
-    protected $oid;
+    protected $eventIncharge;
 
+
+    /**
+     * @return mixed
+     */
+    public function getEventIncharge(){
+        return $this->eventIncharge;
+    }
+
+
+    /**
+     * @param mixed $eventIncharge
+     */
+    public function setEventIncharge($eventIncharge){
+        $this->eventIncharge = $eventIncharge;
+    }
 
     /**
      * @return mixed
@@ -139,23 +153,6 @@ class Event
     }
 
 
-
-    /**
-     * @return mixed
-     */
-    public function getEventid()
-    {
-        return $this->eventid;
-    }
-
-    /**
-     * @param mixed $eventid
-     */
-    public function setEventid($eventid)
-    {
-        $this->eventid = $eventid;
-    }
-
     /**
      * @return mixed
      */
@@ -220,20 +217,5 @@ class Event
         $this->totalparticipant = $totalparticipant;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOid()
-    {
-        return $this->oid;
-    }
-
-    /**
-     * @param mixed $oid
-     */
-    public function setOid($oid)
-    {
-        $this->oid = $oid;
-    }
 
 }

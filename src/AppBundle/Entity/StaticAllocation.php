@@ -13,7 +13,6 @@ class StaticAllocation
 {
     protected  $slotname;
     protected $day;
-    protected $resourcetype;
     protected $sportid;
     protected $resourceid;
     protected $maximumplayers;

@@ -10,7 +10,7 @@ namespace AppBundle\Modal;
 
 use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
-use AppBundle\Entity\Sport;
+use AppBundle\Entity\ResourceAllocation;
 
 $r=new DBAccess(null);
 $r->insert();
@@ -36,9 +36,6 @@ class DBAccess
                 case 'AppBundle\Entity\Instuctor':
                     $this->entity_type = 'Instuctor';
                     break;
-                case 'AppBundle\Entity\Sport':
-                    $this->entity_type = 'Instuctor';
-                    break;
             }
         }
 
@@ -57,6 +54,13 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
+            elseif($this->entity_type=='Entity'){
+                $query="UPDATE event SET event_name='".$this->entity->getEventname()."'tot_participants'".$this->entity->getTotalparticipant()."'event_type'".$this->entity->getEventtype()."'start_date'".$this->entity->getStartdate()."'end_date'".$this->entity->getEnddate()."'start_time'".$this->entity->getStarttime()."'end_time'".$this->entity->getEndtime()."'budget'".$this->entity->getBudget()."'description'".$this->entity->getDescription()."'location'".$this->entity->getLocation()."'i_id'".$this->entity->getEventIncharge()."'";
+            }
+            elseif($this->entity_type=='Sport'){
+                $query="UPDATE sport SET title='".$this->entity->getTitle()."'tot_players'".$this->entity->getTotalplayers()."'type'".$this->entity->getType()."'";
+            }
+            elseif($this->entity_type=='')
          //   $db->executeQuery($query);
             $db->closeConnection();
         }
@@ -74,7 +78,7 @@ class DBAccess
                 $query = "DELETE FROM member WHERE s_ID='".$this->entity->getStudentId()."'";
             }
             elseif($this->entity_type == 'Resource'){
-                $query = "DELETE FROM resource WHERE r_ID = '".$this->entity->setResourceId()."'";
+                $query = "DELETE FROM resource WHERE r_ID = '".$this->entity->getResourceId()."'";
             }
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "DELETE FROM resource_alloc WHERE s_ID = '".$this->entity->getMemberId()."' AND r_ID = '".$this->entity->setResourceId()."'";
@@ -125,9 +129,11 @@ class DBAccess
                 $type=$obj->getType();
                 $description=$obj->getDescription();
                 $o_id=$obj->getOfficerId();
+                $regDate=$obj->getRegDate();
+                $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
-                $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
+                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,reg_date,name) VALUES (?,?,?,?,?,?,?)");
+                $query->bind_param("dsssiss",$value,$type,$state,$description,$o_id,$regDate,$name);
 
 
 
@@ -137,17 +143,6 @@ class DBAccess
                 $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
 
             }
-            elseif($this->entity_type=='Sport')
-            {
-                mysqli_report(MYSQLI_REPORT_ALL);
-                $obj=$this->entity;
-                print_r($obj);
-                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?,?)");
-                $query->bind_param("sss",$obj->getTitle(),$obj->getTotalplayers(),$obj->getType());
-                $query->execute();
-
-            }
-
            // $db->executeQuery($query);
             $db->closeConnection();
         }
@@ -200,7 +195,7 @@ class DBAccess
                     $resourceAlloc->$property($value);
                 }
                 $query = "SELECT * FROM dynamic_alloc WHERE r_ID ='".$resourceAlloc->getResourceId()."' AND s_ID = '".$resourceAlloc->getMemberId()."'";
-                //$result = $db->executeQuery($query);
+                $result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resourceAlloc->setComments($row[2]);
                     $resourceAlloc->setIssuedDate($row[3]);

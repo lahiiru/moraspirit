@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+
+{% block script %}
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+
+   $(document).ready(function() {
+      $( "#form_memberrole" ).change(function() {
+         $.ajax({
+            url: '{{ path('getdata') }}',
+            type: 'POST',
+            success: function () {
+               alert("hdhd")
+            }
+         });
+
+
+
+      });
+
+   });
+</script>
+
+
+   <script>
+      $(document).ready(function(){
+
+         $( "#member_facultyname" ).change(function() {
+
+         });
+      });
+   </script>
+
+
+{% endblock script %}
+{% block root %}
+
+
+
+   {% endblock root %}

@@ -31,6 +31,22 @@ class EventMember
         $this->studentid = $studentid;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEventid()
+    {
+        return $this->eventid;
+    }
+
+    /**
+     * @param mixed $eventid
+     */
+    public function setEventid($eventid)
+    {
+        $this->eventid = $eventid;
+    }
+
 
 
 }

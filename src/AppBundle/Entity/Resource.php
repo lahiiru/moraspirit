@@ -15,28 +15,11 @@ class Resource
     protected $value;
     protected $description;
     protected $officer_id;
-
-    protected $state;
+    protected $type;
+    protected $reg_date;
     protected $name;
-    protected $sportid;
 
 
-
-    /**
-     * @return mixed
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * @param mixed $state
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    }
 
     /**
      * @return mixed
@@ -57,23 +40,35 @@ class Resource
     /**
      * @return mixed
      */
-    public function getSportid()
+    public function getType()
     {
-        return $this->sportid;
+        return $this->type;
     }
 
     /**
-     * @param mixed $sportid
+     * @param mixed $type
      */
-    public function setSportid($sportid)
+    public function setType($type)
     {
-        $this->sportid = $sportid;
+        $this->type = $type;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
 
-
-
-
+    /**
+     * @param mixed $state
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
+    protected $state;
 
     /**
      * @return mixed
@@ -138,5 +133,22 @@ class Resource
     {
         $this->officer_id = $officer_id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegDate()
+    {
+        return $this->reg_date;
+    }
+
+    /**
+     * @param mixed $reg_date
+     */
+    public function setRegDate($reg_date)
+    {
+        $this->reg_date = $reg_date;
+    }
+
 
 }
