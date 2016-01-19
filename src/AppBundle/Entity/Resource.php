@@ -19,6 +19,8 @@ class Resource
     protected $reg_date;
     protected $name;
 
+
+
     /**
      * @return mixed
      */

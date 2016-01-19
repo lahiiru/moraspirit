@@ -59,6 +59,7 @@ class DynamicReservationController extends  Controller
             }
             else if (!($data->getResourcetype() == 'NON')&& !($data->getResourceId()==null)) {
 
+
                 return $this->render('Profile/profile.html.twig', array(
                     'form' => $form->createView(), 'title' => $formtitle, 'table' => false
                 ));

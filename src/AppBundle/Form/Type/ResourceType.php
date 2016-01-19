@@ -32,6 +32,7 @@ class ResourceType extends  AbstractType
                 'choices' => $this->getSport(),
                 'label'=>'Sport Name'
             ))
+            ->add('type', ReserveResourceType::class ,array('label'=>'Type' ))
             ->add('name', TextType::class ,array('label'=>'Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
             ->add('value', NumberType::class , array('label'=>'Value' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
             ->add('description', TextType::class ,array('label'=>'Description' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Student id ( eg . 140678N )')))
