@@ -52,8 +52,10 @@ class DynamicAllocationType  extends  AbstractType
 
             $form->add('resourcetype', ReserveResourceType::class ,array('label'=>'Type','attr'  => array("disabled"=>"true")))
                 ->add('resource_id',TextType::class,['label'=>'Resource ID'])
-                 ->add('issued_date', DateType::class,['label'=>'Reserved Date'])
-                 ->add('due_date', DateType::class,['label'=>'Due Date'])
+                ->add('issued_date',TextType::class,array('label'=>'Reserved Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
+                ->add('due_date',TextType::class,array('label'=>'Due Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
+               // ->add('issued_date', DateType::class,['label'=>'Reserved Date'])
+                // ->add('due_date', DateType::class,['label'=>'Due Date'])
                  ->add('comments',TextType::class, ['label' => 'Comments']);
 
             $form->add('save', SubmitType::class, ['label' => 'Submit']);

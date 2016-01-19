@@ -26,16 +26,19 @@ class ResourceController extends  Controller
 
     public  function  resourceAction(Request $request){
         $resource =new Resource();
-        $resource->setRegDate(date("Y-m-d") );
-        $resource->setState('AVL');
+       // $resource->setRegDate(date("Y-m-d") );
+       // $resource->setState('AVL');
         $formtitle="New Resource  Registration";
         $form = $this->createForm(ResourceType::class, $resource);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           // $db= new DBAccess($resource);
-            //$db->insert();
+           $db= new DBAccess($resource);
+            $resource->setRegDate(date("Y-m-d") );
+            $resource->setState('AVL');
+            print_r($resource);
+            $db->insert();
 
         }
 
