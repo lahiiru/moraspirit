@@ -44,8 +44,14 @@ class ApproveReservationController extends  Controller
 
 
         $title= "New Event Registration";
-        return $this->render('UserInterface/approve.html.twig', array(
+
+      /*  return $this->render('UserInterface/approve.html.twig', array(
             'form' => $form->createView(), 'title'=>$title ,'table'=>false
+        ));
+        */
+
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false
         ));
 
 

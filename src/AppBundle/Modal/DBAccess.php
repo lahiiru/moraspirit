@@ -10,7 +10,7 @@ namespace AppBundle\Modal;
 
 use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
-use AppBundle\Entity\ResourceAllocation;
+use AppBundle\Entity\Sport;
 
 $r=new DBAccess(null);
 $r->insert();
@@ -34,6 +34,9 @@ class DBAccess
                     $this->entity_type = 'ResourceAllocation';
                     break;
                 case 'AppBundle\Entity\Instuctor':
+                    $this->entity_type = 'Instuctor';
+                    break;
+                case 'AppBundle\Entity\Sport':
                     $this->entity_type = 'Instuctor';
                     break;
             }
@@ -134,6 +137,17 @@ class DBAccess
                 $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
 
             }
+            elseif($this->entity_type=='Sport')
+            {
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj=$this->entity;
+                print_r($obj);
+                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?,?)");
+                $query->bind_param("sss",$obj->getTitle(),$obj->getTotalplayers(),$obj->getType());
+                $query->execute();
+
+            }
+
            // $db->executeQuery($query);
             $db->closeConnection();
         }

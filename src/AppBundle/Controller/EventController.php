@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\EventType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 
 
@@ -24,12 +22,12 @@ class EventController extends  Controller
 {
 
     /**
-     * @Route("/register/event", name="event_register")
+     * @Route("/register/event1", name="event_register1")
      */
 
-    public function indexAction(Request $request)
+    public function eventAction(Request $request)
     {
-        $event = new Event();
+        $event = array();
         $title= "New Event Registration";
 
         $form = $this->createForm(EventType::class, $event);
@@ -37,7 +35,7 @@ class EventController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
+            print_r($form->getData());
 
         }
 
