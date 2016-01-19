@@ -63,7 +63,7 @@ class SecurityController extends Controller
      */
     public function logoutAction()
     {
-        throw new \Exception('This should never be reached!');
+        return $this->redirectToRoute('login_route');
     }
 
 
