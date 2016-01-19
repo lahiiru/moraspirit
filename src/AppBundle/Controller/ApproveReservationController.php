@@ -10,7 +10,7 @@ namespace AppBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,7 +19,7 @@ class ApproveReservationController extends  Controller
 {
 
     /**
-     * @Route("/approve", name="approve")
+     * @Route("/approve/reservation", name="approve_reservation")
      *
      */
 
@@ -27,13 +27,11 @@ class ApproveReservationController extends  Controller
     {
         $data = array();
         $form = $this->createFormBuilder($data)
-            ->add('query', 'text')
-            ->add('category', 'choice',
-                array('choices' => array(
-                    'judges'   => 'Judges',
-                    'interpreters' => 'Interpreters',
-                    'attorneys'   => 'Attorneys',
-                )))
+            ->add('sportid', TextType::class ,array('label'=>'Sport ID' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
+            ->add('title', TextType::class , array('label'=>'Title' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
+            ->add('type', TextType::class ,array('label'=>'Type' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Student id ( eg . 140678N )')))
+            ->add('totalplayers', TextType::class ,array('label'=>'Total Players' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
+            ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')))
             ->getForm();
 
         $form->handleRequest($request);
@@ -46,8 +44,14 @@ class ApproveReservationController extends  Controller
 
 
         $title= "New Event Registration";
-        return $this->render('default/index.html.twig', array(
+
+      /*  return $this->render('UserInterface/approve.html.twig', array(
             'form' => $form->createView(), 'title'=>$title ,'table'=>false
+        ));
+        */
+
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false
         ));
 
 

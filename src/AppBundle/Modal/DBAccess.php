@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: bmCSoft
+// * User: bmCSoft
  * Date: 2015-12-16
  * Time: 4:57 PM
  */
@@ -9,13 +9,11 @@
 namespace AppBundle\Modal;
 
 use AppBundle\Entity\Member;
-use AppBundle\Entity\Officer;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\ResourceAllocation;
-use AppBundle\Entity\Sport;
-use AppBundle\Entity\Instuctor;
 
-$c=new DBAccess(null);
+$r=new DBAccess(null);
+$r->insert();
 
 class DBAccess
 {
@@ -40,12 +38,6 @@ class DBAccess
                     break;
             }
         }
-        //testing area
-
-        $this->testFunction();
-
-
-        //end testing area
 
     }
 
@@ -62,7 +54,7 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
-            $db->executeQuery($query);
+         //   $db->executeQuery($query);
             $db->closeConnection();
         }
         else{
@@ -84,7 +76,7 @@ class DBAccess
             elseif($this->entity_type=='ResourceAllocation'){
                 $query = "DELETE FROM resource_alloc WHERE s_ID = '".$this->entity->getMemberId()."' AND r_ID = '".$this->entity->setResourceId()."'";
             }
-            $db->executeQuery($query);
+        //    $db->executeQuery($query);
             $db->closeConnection();
         }
         else{
@@ -102,6 +94,7 @@ class DBAccess
             if($this->entity_type == 'Member'){                           //
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
+                $FirstName=$obj->getFirstName();
                 $LastName=$obj-> getLastName();
                 $DeptName=$obj->getDeptName();
                 $RegisterDate=$obj->getRegisterDate();
@@ -121,17 +114,8 @@ class DBAccess
                 $query->execute();
 
             }
-            elseif($this->entity_type == 'Resource'){                   //
-
-                $test=new Resource();
-                $test->setOfficerId(4);
-                $test->setDescription("dwf");
-                $test->setState("nuwan");
-                $test->setValue(90);
-                $test->setType("wf");
-                $obj=$test;
-
-                //$obj=$this->entity;
+            elseif($this->entity_type == 'Resource'){
+                $obj=$this->entity;
 
                 $value=$obj->getValue();
                 $state=$obj->getState();
@@ -141,90 +125,18 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id) VALUES (?,?,?,?,?)");
                 $query->bind_param("dsssi",$value,$state,$type,$description,$o_id);
-                $query->execute();
+
 
 
             }
             elseif($this->entity_type=='DyanamicAllocation'){
-                $obj=$this->entity;
-
-                $s_id=$obj->getMemberId();
-                $r_id=$obj->getResourceId();
-                $issued_date=$obj->getIssuedDate();
-                $due_date=$obj->getDueDate();
-                $comments=$obj->getComments();
-
                 //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
                 $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
-                $query->bind_param("iisss",$s_id,$r_id,$issued_date,$due_date,$comments);
-                $query->execute();
 
             }
-
-            elseif($this->entity_type=='Event'){
-
-                $obj=$this->entity;
-
-                $eventName=$obj->getEventname();
-                $totParcipants=$obj->getTotalparticipant();
-                $eventType=$obj->getEventtype();
-                $startDate=$obj->getStartdate();
-                $endDate=$obj->getEnddate();
-                $startTime=$obj->getStarttime();
-                $endTime=$obj->getEndtime();
-                $budget=$obj->getBudget();
-                $description=$obj->getDescription();
-                $location=$obj->getLocation();
-                $inchargeId=$obj->getOid();         //i_id field
-
-
-                $query=$link->prepare("INSERT INTO event(event_name,tot_participants,event_type,start_date,end_date,start_time,end_time,budget,description,location,i_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)");
-                $query->bind_param("sisssssdsi",$eventName,$totParcipants,$eventType,$startDate,$endDate,$startTime,$endTime,$budget,$description,$location,$inchargeId);
-                $query->execute();
-            }
-
-            elseif($this->entity_type=='Sport'){               //
-                //test object
-                $test=new Sport();
-                $test->setType("nuwan");
-                $test->setTitle("nuwan");
-                $test->setTotalplayers(4);
-
-                $obj=$this->entity;
-
-
-                $title=$obj->getTitle();
-                $totalPlayers=$obj->getTotalplayers();
-                $type=$obj->getType();
-
-                $query=$link->prepare("INSERT INTO sport(title,tot_players,type) VALUES(?,?,?)");
-                $query->bind_param("sis",$title,$totalPlayers,$type);
-                $query->execute();
-            }
-
-            //$db->executeQuery($query);
+           // $db->executeQuery($query);
             $db->closeConnection();
         }
-        //insert data to instructor table
-        elseif($this->entity_type =='Instructor'){
-            $obj=$this->entity;
-
-            $firtName=$obj->getFirstName();
-            $lastName=$obj->getLastName();
-            $institute=$obj->getInstitute();
-
-            $query=$link->prepare("INSERT INTO instructor(first_name,last_name,institute) VALUES(?,?,?)");
-            $query->bind_param("sss",$firtName,$lastName,$institute);
-            $query->execute();
-        }
-        //insert to officer table
-        elseif($this->entity_type =='Officer'){//
-            $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,role) VALUES(?,?,?)");
-            $query->bind_param("iss",$this->entity->getMemberId(),$this->entity->getAppointedDate(),$this->entity->getRoles());
-            $query->execute();
-        }
-
-
         else{
             echo "Cannot connect to database";
         }
@@ -274,7 +186,7 @@ class DBAccess
                     $resourceAlloc->$property($value);
                 }
                 $query = "SELECT * FROM dynamic_alloc WHERE r_ID ='".$resourceAlloc->getResourceId()."' AND s_ID = '".$resourceAlloc->getMemberId()."'";
-                $result = $db->executeQuery($query);
+                //$result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resourceAlloc->setComments($row[2]);
                     $resourceAlloc->setIssuedDate($row[3]);
@@ -289,23 +201,4 @@ class DBAccess
             echo "Cannot connect to database";
         }
     }
-
-    public function testFunction(){
-        $db=new DBConnection();
-        $link=$db->connect();
-
-        echo "awa";
-
-        $test=new Officer();
-        $test->setMemberId(5);
-        $test->setAppointedDate('2003/23/23');
-        $test->setRoles("nuwan test");
-
-        $this->entity=$test;
-
-        $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,role) VALUES(?,?,?)");
-        $query->bind_param("iss",$this->entity->getMemberId(),$this->entity->getAppointedDate(),$this->entity->getRoles());
-        $query->execute();
-    }
 }
-

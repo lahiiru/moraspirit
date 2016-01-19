@@ -11,7 +11,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Sport;
 use AppBundle\Form\Type\SportType;
+use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -31,6 +33,9 @@ class SportController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $db= new DBAccess($sport);
+            print_r($sport);
+            $db->insert();
 
 
         }

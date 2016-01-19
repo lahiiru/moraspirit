@@ -1,38 +1,47 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: niroshan
- * Date: 1/7/16
- * Time: 9:42 AM
- */
+/*
 
-
-// src/AppBundle/Entity/User.php
+*/
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
-
-/**
- * @ORM\Table(name="app_users")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
- */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, EquatableInterface
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    private $username;
+    private $password;
+    private $salt;
+    private $roles;
     private $id;
+    private $role;
+    private $plainPassword;
+    private $email;
+    private $isActive;
+
+    public function __construct($username, $password, $salt, array $roles)
+    {
+        $this->username = $username;
+        $this->password = $password;
+        $this->salt = $salt;
+        $this->roles = $roles;
+    }
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @return mixed
      */
-    private $username;
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return mixed
@@ -51,145 +60,23 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @ORM\Column(type="string", length=5 )
+     * @return mixed
      */
-    private $role;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max = 4096)
-     */
-    private $plainPassword;
-
-
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
-    public function __construct()
+    public function getPlainPassword()
     {
-        $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function getSalt()
-    {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-    public function eraseCredentials()
-    {
-    }
-
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-            ) = unserialize($serialized);
+        return $this->plainPassword;
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @param mixed $plainPassword
      */
-    public function getId()
+    public function setPlainPassword($plainPassword)
     {
-        return $this->id;
+        $this->plainPassword = $plainPassword;
     }
 
     /**
-     * Set username
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
+     * @return mixed
      */
     public function getEmail()
     {
@@ -197,57 +84,68 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return User
+     * @param mixed $email
      */
-    public function setIsActive($isActive)
+    public function setEmail($email)
     {
-        $this->isActive = $isActive;
-
-        return $this;
+        $this->email = $email;
     }
 
     /**
-     * Get isActive
-     *
-     * @return boolean
+     * @return mixed
      */
     public function getIsActive()
     {
         return $this->isActive;
     }
 
-
-    public function getPlainPassword()
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive)
     {
-        return $this->plainPassword;
+        $this->isActive = $isActive;
     }
 
-    public function setPlainPassword($password)
+
+    public function getRoles()
     {
-        $this->plainPassword = $password;
+        return $this->roles;
     }
 
-    public function isAccountNonExpired()
+    public function getPassword()
     {
+        return $this->password;
+    }
+
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->salt !== $user->getSalt()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
         return true;
-    }
-
-    public function isAccountNonLocked()
-    {
-        return true;
-    }
-
-    public function isCredentialsNonExpired()
-    {
-        return true;
-    }
-
-    public function isEnabled()
-    {
-        return $this->isActive;
     }
 }
