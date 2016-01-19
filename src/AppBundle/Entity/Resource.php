@@ -19,6 +19,8 @@ class Resource
     protected $state;
     protected $name;
     protected $sportid;
+    protected $reg_date;
+
 
 
 
@@ -138,5 +140,23 @@ class Resource
     {
         $this->officer_id = $officer_id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRegDate()
+    {
+        return $this->reg_date;
+    }
+
+    /**
+     * @param mixed $reg_date
+     */
+    public function setRegDate($reg_date)
+    {
+        $this->reg_date = $reg_date;
+    }
+
+
 
 }
