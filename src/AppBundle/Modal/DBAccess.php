@@ -135,7 +135,7 @@ class DBAccess
                 $officerID=$this->entity->getOfficerID();
 
                 $query=$link->prepare("INSERT INTO event_incharge(o_id,event_id) VALUES(?,?)");
-                $query->bind_param($eventID,$officerID);
+                $query->bind_param("ii",$eventID,$officerID);
                 $query->execute();
             }
 
@@ -144,17 +144,23 @@ class DBAccess
                 $eventId=$this->entity->getStudentid();
 
                 $query=$link->prepare("INSERT INTO event_member(s_id,event_id) VALUES(?,?)");
-                $query->bind_param($studentId,$eventId);
+                $query->bind_param("i,i",$studentId,$eventId);
+                $query->execute();
+            }
+
+            elseif($this->entity_type=='StaticAllocation'){
+                $slotName=$this->entity->getResourcetype();
+                $day=$this->entity->getDay();
+                $sportId=$this->entity->getSportid();
+                $resourceID=$this->entity->getResourceid();
+                $maxPlayers=$this->entity->getMaximumplayers();
+
+                $query=$link->prepare("INSERT INTO static_allocation(slot_name,day,max_players,sport_id,r_id) VALUES(?,?,?,?,?)");
+                $query->bind_param("ssiii",$slotName,$day,$sportId,$resourceID,$maxPlayers);
                 $query->execute();
             }
 
 
-            elseif($this->entity_type=='DyanamicAllocation'){
-                //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
-                $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
-
-
-            }
            // $db->executeQuery($query);
             $db->closeConnection();
         }
