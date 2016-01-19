@@ -55,7 +55,7 @@ class DBAccess
                 $query = "UPDATE resource_alloc SET s_ID='".$this->entity->getMemberId()."',r_ID='".$this->entity->getResourceId()."',comments='".$this->entity->getComments()."',issued_date='".$this->entity->getIssuedDate()."',due_date='".$this->entity->getDueDate()."' WHERE s_ID='".$this->entity->getMemberId()."'";
             }
             elseif($this->entity_type=='Entity'){
-                $query="UPDATE event SET event_name='".$this->entity->getEventname()."'tot_participants'".$this->entity->getTotalparticipant()."'event_type'".$this->entity->getEventtype()."'start_date'".$this->entity->getStartdate()."'end_date'".$this->entity->getEnddate()."'start_time'".$this->entity->getStarttime()."'end_time'".$this->entity->getEndtime()."'budget'".$this->entity->getBudget()."'description'".$this->entity->getDescription()."'location'".$this->entity->getLocation()."'i_id'".$this->entity->getEventIncharge();
+                $query="UPDATE event SET event_name='".$this->entity->getEventname()."'tot_participants'".$this->entity->getTotalparticipant()."'event_type'".$this->entity->getEventtype()."'start_date'".$this->entity->getStartdate()."'end_date'".$this->entity->getEnddate()."'start_time'".$this->entity->getStarttime()."'end_time'".$this->entity->getEndtime()."'budget'".$this->entity->getBudget()."'description'".$this->entity->getDescription()."'location'".$this->entity->getLocation()."'i_id'".$this->entity->getEventIncharge()."'";
             }
          //   $db->executeQuery($query);
             $db->closeConnection();
@@ -125,7 +125,7 @@ class DBAccess
                 $type=$obj->getType();
                 $description=$obj->getDescription();
                 $o_id=$obj->getOfficerId();
-                $regDate=$obj->getreg_date();
+                $regDate=$obj->getRegDate();
                 $name=$obj->getName();
 
                 $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,reg_date,name) VALUES (?,?,?,?,?,?,?)");
