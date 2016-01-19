@@ -26,14 +26,11 @@ class ResourceController extends  Controller
 
     public  function  resourceAction(Request $request){
         $resource =new Resource();
-        $resource->setState('PND');
-
+        $resource->setRegDate(date("Y-m-d") );
+        $resource->setState('AVL');
         $formtitle="New Resource  Registration";
-
         $form = $this->createForm(ResourceType::class, $resource);
 
-        $form->add('officer_id',\Symfony\Component\Form\Extension\Core\Type\IntegerType::class ,array('label'=>'Officer ID' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
-            ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

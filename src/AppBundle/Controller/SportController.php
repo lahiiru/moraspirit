@@ -34,10 +34,7 @@ class SportController extends  Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $db= new DBAccess($sport);
-            print_r($sport);
             $db->insert();
-
-
         }
 
         return $this->render('default/index.html.twig', array(

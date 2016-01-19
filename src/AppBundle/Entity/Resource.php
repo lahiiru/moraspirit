@@ -16,7 +16,6 @@ class Resource
     protected $description;
     protected $officer_id;
     protected $type;
-    protected $name;
 
     /**
      * @return mixed
@@ -114,22 +113,5 @@ class Resource
     {
         $this->officer_id = $officer_id;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
 
 }
