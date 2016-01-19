@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\DynamicAllocation;
 use AppBundle\Form\Type\DynamicAllocationType;
+use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +33,6 @@ class DynamicReservationController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            print_r($data);
-
 
             if ($data->getResourcetype() == 'NON') {
                 return $this->render('default/index.html.twig', array(
@@ -59,10 +58,14 @@ class DynamicReservationController extends  Controller
             }
             else if (!($data->getResourcetype() == 'NON')&& !($data->getResourceId()==null)) {
 
+                $data->setMemberId(1);
+                print_r($data);
+                $db = new DBAccess($data);
+                $db->insert();
 
-                return $this->render('Profile/profile.html.twig', array(
-                    'form' => $form->createView(), 'title' => $formtitle, 'table' => false
-                ));
+                //return $this->render('Profile/profile.html.twig', array(
+                //    'form' => $form->createView(), 'title' => $formtitle, 'table' => false
+                //));
 
 
             }
