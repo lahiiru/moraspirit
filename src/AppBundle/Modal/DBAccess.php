@@ -205,6 +205,17 @@ class DBAccess
                 mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$last_id."','".$eventIncharge."')");
                 mysqli_commit($link);
             }
+            elseif($this->entity_type=='Resource'){
+                $category=$this->entity->getCategory();
+                $description=$this->entity->getDescription();
+                $registrationDate=$this->entity->getRegDate();
+                $typeId=$this->entity->getTypeId();
+                $value=$this->entity->getValue();
+
+                $query=$link->prepare("INSERT INTO rosource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
+                $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
+                $query->execute();
+            }
 
            // $db->executeQuery($query);
             $db->closeConnection();
