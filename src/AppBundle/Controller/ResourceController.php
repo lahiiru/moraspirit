@@ -26,8 +26,7 @@ class ResourceController extends  Controller
 
     public  function  resourceAction(Request $request){
         $resource =new Resource();
-       // $resource->setRegDate(date("Y-m-d") );
-       // $resource->setState('AVL');
+
         $formtitle="New Resource  Registration";
         $form = $this->createForm(ResourceType::class, $resource);
 
@@ -37,8 +36,34 @@ class ResourceController extends  Controller
            $db= new DBAccess($resource);
             $resource->setRegDate(date("Y-m-d") );
             $resource->setState('AVL');
-            print_r($resource);
-            //$db->insert();
+            $db->insert();
+
+        }
+
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false
+        ));
+
+
+    }
+
+    /**
+     * @Route("/register/newresourcetype", name="new_esource_type_registration")
+     */
+
+    public  function  newresourcetypeAction(Request $request){
+        $resource =new Resource();
+
+        $formtitle="New Resource  Registration";
+        $form = $this->createForm(ResourceType::class, $resource);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $db= new DBAccess($resource);
+            $resource->setRegDate(date("Y-m-d") );
+            $resource->setState('AVL');
+            $db->insert();
 
         }
 
