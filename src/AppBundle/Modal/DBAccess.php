@@ -10,6 +10,7 @@ namespace AppBundle\Modal;
 
 use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
+use AppBundle\Entity\User;
 use AppBundle\Entity\ResourceAllocation;
 
 $r=new DBAccess(null);
@@ -39,6 +40,19 @@ class DBAccess
             }
         }
 
+    }
+
+    public function resetPassword($password){
+        $db=new DBConnection();
+        $myEmail=$this->entity->getEmail();
+        var_dump($myEmail);
+
+
+        if($db->connect()){
+            $link=$db->connect();
+            $query="UPDATE app_user SET password='".$password."' WHERE email = '".$myEmail."'";
+            $link->query($query);
+        }
     }
 
     public function update(){
@@ -74,6 +88,7 @@ class DBAccess
         $db=new DBConnection();
         if($db->connect()){
             $query="";
+
             if($this->entity_type == 'Member'){
                 $query = "DELETE FROM member WHERE s_ID='".$this->entity->getStudentId()."'";
             }
