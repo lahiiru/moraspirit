@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 
 class User implements UserInterface, EquatableInterface
 {
-    private $username;
     private $password;
     private $salt;
     private $roles;
@@ -18,21 +17,14 @@ class User implements UserInterface, EquatableInterface
     private $email;
     private $isActive;
 
-    public function __construct($username, $password, $salt, array $roles)
+    public function __construct($email,$password, $salt, array $roles)
     {
-        $this->username = $username;
+        $this->email = $email;
         $this->password = $password;
         $this->salt = $salt;
         $this->roles = $roles;
     }
 
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
 
     /**
      * @param mixed $password
@@ -138,15 +130,12 @@ class User implements UserInterface, EquatableInterface
         return $this->salt;
     }
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
     public function eraseCredentials()
     {
     }
-
+    public function getUsername(){
+        return $this->email;
+    }
     public function isEqualTo(UserInterface $user)
     {
         if (!$user instanceof User) {
@@ -154,10 +143,6 @@ class User implements UserInterface, EquatableInterface
         }
 
         if ($this->salt !== $user->getSalt()) {
-            return false;
-        }
-
-        if ($this->username !== $user->getUsername()) {
             return false;
         }
 

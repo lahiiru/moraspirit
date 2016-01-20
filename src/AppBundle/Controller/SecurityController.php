@@ -31,8 +31,8 @@ class SecurityController extends Controller
     {
         $authenticationUtils = $this->get('security.authentication_utils');
         $p=password_hash("1234", PASSWORD_BCRYPT, array('cost' => 13));
-        var_dump($p);
-        var_dump(serialize(["ROLE_ADMIN","ROLE_USER"]));
+        //var_dump($p);
+        //var_dump(serialize(["ROLE_ADMIN","ROLE_USER"]));
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

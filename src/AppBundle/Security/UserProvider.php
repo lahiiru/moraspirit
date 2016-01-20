@@ -7,8 +7,8 @@
  */
 /* Please execute following Query
  *
- * ALTER TABLE `app_users` CHANGE `role` `role` VARCHAR(80) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
- * INSERT INTO `moraspirit`.`app_users` (`username`, `password`, `email`, `id`, `is_active`, `role`) VALUES ('admin', '$2y$13$0aW6zsmFJEZKWgS8o5kK..U3KOP6mWC6rBl9VLPvEMuH6j8/1mLlO', 'admin@gmail.com', '1', '1', 'a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}');
+ * ALTER TABLE `app_user` CHANGE `role` `role` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ * INSERT INTO `moraspirit`.`app_user` (`password`, `email`, `id`, `is_active`, `role`) VALUES ('$2y$13$0aW6zsmFJEZKWgS8o5kK..U3KOP6mWC6rBl9VLPvEMuH6j8/1mLlO', 'admin@gmail.com', '1', '1', 'a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}');
  *
  */
 namespace AppBundle\Security;
@@ -28,13 +28,12 @@ class UserProvider implements UserProviderInterface
         $db = new DBConnection();
         $link=$db->connect();
 
-        $query = "SELECT * FROM app_users WHERE username ='$username'";
+        $query = "SELECT * FROM app_user WHERE email ='$username'";
         $result = $link->query($query);
         $user = null;
         while($row = mysqli_fetch_assoc($result)){
-            $user = new User($row['username'],$row['password'],$row['email'],unserialize($row['role']));
+            $user = new User($row['email'],$row['password'],"",unserialize($row['role']));
         }
-
         if($user==null){
             throw new UsernameNotFoundException(
                 sprintf('Username "%s" does not exist.', $username)
