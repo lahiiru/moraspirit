@@ -16,6 +16,7 @@ class User implements UserInterface, EquatableInterface
     private $plainPassword;
     private $email;
     private $isActive;
+    private $member;
 
     public function __construct($email,$password, $salt, array $roles)
     {
@@ -23,6 +24,23 @@ class User implements UserInterface, EquatableInterface
         $this->password = $password;
         $this->salt = $salt;
         $this->roles = $roles;
+        $this->member=new Member();
+    }
+
+    /**
+     * @return Member
+     */
+    public function getMember()
+    {
+        return $this->member;
+    }
+
+    /**
+     * @param Member $member
+     */
+    public function setMember($member)
+    {
+        $this->member = $member;
     }
 
 

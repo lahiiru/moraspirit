@@ -18,7 +18,7 @@ public static function getResourceAvalability($category){
     $db=new DBConnection();
     $link =  $db->connect();
     if($link != null){
-        $query = "SELECT rt.type_id,rt.name,rt.available_quantity FROM resource_registration rr INNER JOIN resource_type rt ON rr.type_id = rt.type_id WHERE rr.category = '".$category."'";
+        $query = "SELECT rt.type_id AS ID,rt.name AS Name,rt.available_quantity  AS  'Avalable Quantity'  FROM resource_registration rr INNER JOIN resource_type rt ON rr.type_id = rt.type_id WHERE rr.category = '".$category."'";
         $result = $link->query($query);
         $result_array=array();
         $index=0;
