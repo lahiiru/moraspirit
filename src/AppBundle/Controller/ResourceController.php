@@ -14,6 +14,7 @@ use AppBundle\Form\Type\ResourceType;
 use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,7 +36,7 @@ class ResourceController extends  Controller
         if ($form->isSubmitted() && $form->isValid()) {
            $db= new DBAccess($resource);
             $resource->setRegDate(date("Y-m-d") );
-            $resource->setState('AVL');
+
             $db->insert();
 
         }
@@ -52,18 +53,27 @@ class ResourceController extends  Controller
      */
 
     public  function  newresourcetypeAction(Request $request){
-        $resource =new Resource();
+        $resource =array();
 
-        $formtitle="New Resource  Registration";
-        $form = $this->createForm(ResourceType::class, $resource);
+        $formtitle="New Resource Type";
+        $form = $this->createFormBuilder($resource)
+            ->add('name',\Symfony\Component\Form\Extension\Core\Type\TextType::class, ['label' => 'Resource Name'])
+            ->add('o_id', ChoiceType::class, array(
+            'mapped'  => true,
+            'choices' => $this->getOfficername(),
+            'label'=>'Officer Name'
+        ))
+
+
+            ->add('save', SubmitType::class, ['label' => 'Submit'])
+            ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $db= new DBAccess($resource);
-            $resource->setRegDate(date("Y-m-d") );
-            $resource->setState('AVL');
-            $db->insert();
+            var_dump($form->getData());
 
         }
 
@@ -73,5 +83,10 @@ class ResourceController extends  Controller
 
 
     }
+
+    private  function  getOfficername(){
+        return array('Saman'=>1, 'Nimal'=>4 );
+    }
+
 
 }

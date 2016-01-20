@@ -31,7 +31,7 @@ class DBAccess
                     $this->entity_type = 'Resource';
                     break;
                 case 'AppBundle\Entity\DynamicAllocation':
-                    $this->entity_type = 'ResourceAllocation';
+                    $this->entity_type = 'DynamicAllocation';
                     break;
                 case 'AppBundle\Entity\Instuctor':
                     $this->entity_type = 'Instuctor';
@@ -188,6 +188,7 @@ class DBAccess
                 mysqli_commit($link);
             }
             elseif($this->entity_type=='Resource'){
+                mysqli_report(MYSQLI_REPORT_ALL);
                 $category=$this->entity->getCategory();
                 $description=$this->entity->getDescription();
                 $registrationDate=$this->entity->getRegDate();
@@ -196,7 +197,22 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
                 $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
+
                 $query->execute();
+            }
+            elseif($this->entity_type=='DynamicAllocation'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $memberID=$this->entity->getMemberId();
+                $typeID=$this->entity->getTypeId();
+                $issuedDate=$this->entity->getIssuedDate();
+                $dueDate=$this->entity->getDueDate();
+                $comments=$this->entity->getComments();
+                //var_dump($typeID);
+
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
+                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query->execute();
+
             }
 
            // $db->executeQuery($query);
@@ -250,6 +266,7 @@ class DBAccess
                 return $resource;
             }
             elseif($this->entity_type=='DynamicAllocation'){
+
                 $resourceAlloc = new ResourceAllocation();
                 foreach($this->entity as $property => $value){
                     $resourceAlloc->$property($value);
