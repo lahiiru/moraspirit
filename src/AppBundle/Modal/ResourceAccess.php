@@ -32,4 +32,24 @@ public static function getResourceAvalability($category){
     $db->closeConnection();
     return null;
 }
+
+
+    public  static  function getResourceType(){
+        $db=new DBConnection();
+        $link =  $db->connect();
+        if($link != null){
+            $query = "SELECT type_id, name  FROM resource_type";
+            $result = $link->query($query);
+            $result_array=array();
+            while($row = mysqli_fetch_assoc($result)){
+                print_r($row);
+            }
+            $db->closeConnection();
+            return $result_array;
+        }
+        $db->closeConnection();
+        return null;
+
+    }
+
 }

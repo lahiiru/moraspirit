@@ -27,14 +27,11 @@ class ResourceType extends  AbstractType
     {
 
         $builder
-            ->add('sport_id', ChoiceType::class, array(
-                'mapped'  => false,
-                'choices' => $this->getSport(),
-                'label'=>'Sport Name'
-            ))
-            ->add('type', ReserveResourceType::class ,array('label'=>'Type' ))
-            ->add('name', TextType::class ,array('label'=>'Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
+
+            ->add('category', ReserveResourceType::class ,array('label'=>'category' ))
+            ->add('type_id',IntegerType::class ,array('label'=>'Officer ID' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
             ->add('value', NumberType::class , array('label'=>'Value' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
+
             ->add('description', TextType::class ,array('label'=>'Description' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Student id ( eg . 140678N )')))
             ->add('officer_id',IntegerType::class ,array('label'=>'Officer ID' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')));
@@ -49,7 +46,7 @@ class ResourceType extends  AbstractType
 
     }
 
-    private function getSport(){
+    private function getType(){
         return array( 'Cricket'=>1 , 'VollyBall'=>2 , 'Netball'=>3);
 
     }

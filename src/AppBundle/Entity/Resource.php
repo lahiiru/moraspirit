@@ -16,6 +16,26 @@ class Resource
     protected $description;
     protected $type_id;
     protected $reg_date;
+    protected $value;
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+
+
 
 
 
