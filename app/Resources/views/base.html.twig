@@ -369,7 +369,7 @@
                         <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Apply For Event</a></li>
                     </ul>
                 </li>
-                {% if app.user.role == 'ADMIN' %}
+                {% if 'ROLE_ADMIN' in app.user.roles  %}
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>

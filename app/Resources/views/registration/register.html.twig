@@ -1,3 +1,4 @@
+{#
 {{ form_start(form) }}
     {{ form_row(form.username) }}
     {{ form_row(form.email) }}
@@ -6,3 +7,86 @@
 
 <button type="submit">Register!</button>
 {{ form_end(form) }}
+#}
+{% extends 'base.html.twig' %}
+
+{% block cssblock %}
+
+    <link href="{{ asset('bundles/dist/css/AdminLTE.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" />
+
+{% endblock cssblock %}
+
+
+{% block script %}
+{% endblock script %}
+    {%  block root %}
+        <section class="content">
+            {%  if table == true %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Hover Data Table</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <table id="example2" class="table table-bordered table-hover">
+                                    <thead>
+
+                                    {% for rows in col|batch(3) %}
+
+                                        <tr>
+
+                                            {% for column in rows %}
+                                                <th>{{ column }}</th>
+                                            {% endfor %}
+
+                                        </tr>
+
+                                    {% endfor %}
+
+                                    </thead>
+                                    <tbody>
+                                    {% for rows in row|batch(3) %}
+                                        {% for a in rows %}
+                                            <tr>
+
+                                                {% for column in a %}
+                                                    <td>{{ column }}</td>
+                                                {% endfor %}
+
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+
+
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+
+                    </div>
+
+                </div>
+            {% endif %}
+
+            {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+            <!-- form start -->
+
+
+            <!-- SELECT2 EXAMPLE -->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ title }}</h3>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </section>
+
+
+
+    {%  endblock %}

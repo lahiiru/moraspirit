@@ -14,7 +14,6 @@ class User implements UserInterface, EquatableInterface
     private $salt;
     private $roles;
     private $id;
-    private $role;
     private $plainPassword;
     private $email;
     private $isActive;
@@ -73,22 +72,6 @@ class User implements UserInterface, EquatableInterface
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param mixed $role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
     }
 
     /**
