@@ -13,6 +13,9 @@ use AppBundle\Form\Type\DynamicAllocationType;
 use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -136,10 +139,37 @@ class DynamicReservationController extends  Controller
      */
 
     public  function reserveSportAction(Request $request){
-        return $this->render('Profile/profile.html.twig'
-        );
+
+        $task = new DynamicAllocation();
+        $formtitle = " Resource  Reservation";
+
+
+
+        $form = $this->createFormBuilder($task)
+            ->add('type_id', ChoiceType::class, array(
+                'mapped'  => false,
+                'choices' => $this->optionBuild(),
+                'label'=>'Type'
+            ))
+                ->add('quntity',TextType::class, ['label' => 'Quntity'])
+                ->add('comments',TextType::class, ['label' => 'Comments'])
+                ->add('save', SubmitType::class, ['label' => 'Submit'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+        }
+
+
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView(),'title'=>$formtitle,'table'=>false
+        ));
 
     }
+
+
 
     /**
      * @Route("/reserve/other", name="reserve_other")
@@ -150,6 +180,20 @@ class DynamicReservationController extends  Controller
         return $this->render('Profile/profile.html.twig'
         );
     }
+
+
+    private function optionBuild($type){
+
+        $r=ResourceAccess::getResourceAvalability($type);
+        print_r($r);
+
+        $r_id=array_keys($r);
+
+
+    }
+
+
+
 
 
 }
