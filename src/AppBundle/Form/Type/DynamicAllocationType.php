@@ -33,8 +33,6 @@ class DynamicAllocationType  extends  AbstractType
         $builder
 
             ->add('catogory', ReserveResourceType::class ,['label'=>'Type'])
-            ->add('issued_date',TextType::class,array('label'=>'Reservation period'  ,'attr'=>array('class'=>'form-control pull-right' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
-            ->add('due_date',TextType::class,array('label'=>'Due Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
             ->add('save', SubmitType::class, ['label' => 'Search'])
 
         ;

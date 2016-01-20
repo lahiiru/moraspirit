@@ -43,7 +43,7 @@ class DynamicReservationController extends  Controller
 
 
             $result=$form->getData();
-            $date = date('Y-m-d', strtotime('01/13/2016'));
+
 
             if($result->getCatogory()=='SEQP'){
                 return new RedirectResponse($this->generateUrl('reserve_sport'));
@@ -81,6 +81,7 @@ class DynamicReservationController extends  Controller
 
         $task = new DynamicAllocation();
         $formtitle = " Resource  Reservation";
+        $date = date('Y-m-d', strtotime('01/13/2016'));
 
 
         if($slug=='sport'){
@@ -99,8 +100,9 @@ class DynamicReservationController extends  Controller
                 'label'=>'Type'
             ))
                 ->add('quntity',IntegerType::class, ['label' => 'Quntity'])
-                ->add('due_date',TextType::class,array('label'=>'Reservation period'  ,'attr'=>array('class'=>'form-control pull-right' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
+                ->add('daterange',TextType::class,array('label'=>'Reservation period'  ,'attr'=>array('class'=>'form-control pull-right' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
                 ->add('comments',TextType::class, ['label' => 'Comments'])
+
                 ->add('save', SubmitType::class, ['label' => 'Submit'])
             ->getForm();
 
@@ -121,16 +123,7 @@ class DynamicReservationController extends  Controller
 
 
 
-    /**
-     * @Route("/blog/{slug}")
-     */
 
-    public  function reserveOtherAction(Request $request,$slug){
-        print_r($slug);
-
-        return $this->render('Profile/profile.html.twig'
-        );
-    }
 
 
 

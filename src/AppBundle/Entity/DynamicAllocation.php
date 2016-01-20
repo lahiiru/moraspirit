@@ -18,6 +18,26 @@ class DynamicAllocation
     protected $due_date;
     protected $catogory;
     protected $quntity;
+    protected  $daterange;
+
+    /**
+     * @return mixed
+     */
+    public function getDaterange()
+    {
+        return $this->daterange;
+    }
+
+    /**
+     * @param mixed $daterange
+     */
+    public function setDaterange($daterange)
+    {
+        $this->daterange = $daterange;
+    }
+
+
+
 
     /**
      * @return mixed
