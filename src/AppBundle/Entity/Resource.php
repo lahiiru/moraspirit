@@ -12,45 +12,27 @@ namespace AppBundle\Entity;
 class Resource
 {
     protected $resource_id;
-    protected $value;
+    protected $category;
     protected $description;
-    protected $officer_id;
-    protected $type;
+    protected $type_id;
     protected $reg_date;
-    protected $name;
 
 
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getTypeId()
     {
-        return $this->name;
+        return $this->type_id;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $type_id
      */
-    public function setName($name)
+    public function setTypeId($type_id)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
+        $this->type_id = $type_id;
     }
 
     /**
@@ -89,17 +71,17 @@ class Resource
     /**
      * @return mixed
      */
-    public function getValue()
+    public function getCategory()
     {
-        return $this->value;
+        return $this->category;
     }
 
     /**
-     * @param mixed $value
+     * @param mixed $category
      */
-    public function setValue($value)
+    public function setCategory($category)
     {
-        $this->value = $value;
+        $this->category = $category;
     }
 
     /**
@@ -118,21 +100,7 @@ class Resource
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOfficerId()
-    {
-        return $this->officer_id;
-    }
 
-    /**
-     * @param mixed $officer_id
-     */
-    public function setOfficerId($officer_id)
-    {
-        $this->officer_id = $officer_id;
-    }
 
     /**
      * @return mixed

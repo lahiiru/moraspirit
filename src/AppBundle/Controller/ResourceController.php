@@ -38,7 +38,7 @@ class ResourceController extends  Controller
             $resource->setRegDate(date("Y-m-d") );
             $resource->setState('AVL');
             print_r($resource);
-            $db->insert();
+            //$db->insert();
 
         }
 

@@ -248,7 +248,7 @@ class DBAccess
                 $result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resource->setResourceId($row[1]);
-                    $resource->setValue($row[2]);
+                    $resource->setCategory($row[2]);
                     $resource->setDescription($row[3]);
                     $resource->setOfficerId($row[4]);
                 }
