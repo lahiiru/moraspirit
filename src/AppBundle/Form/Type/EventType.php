@@ -9,7 +9,9 @@
 namespace AppBundle\Form\Type;
 
 
+use AppBundle\Modal\ResourceAccess;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,11 +31,14 @@ class EventType extends  AbstractType
             ->add('eventtype', MainEventType::class , array('label'=>'Event Type' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
             ->add('description', TextType::class ,array('label'=>'Description' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Student id ( eg . 140678N )')))
             ->add('location', TextType::class ,array('label'=>'Location' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
-            ->add('startdate', TextType::class ,array('label'=>'Start Date'))
-            ->add('enddate', TextType::class ,array('label'=>'End Date'))
-            ->add('starttime', TextType::class ,array('label'=>'Start Time'))
-            ->add('endtime',TextType::class ,array('label'=>'End Time'))
-            ->add('eventincharge',TextType::class ,array('label'=>'Event Incharge'))
+            ->add('daterange',TextType::class ,array('label'=>'Start Date -'))
+            ->add('starttime', TimeType::class ,array('label'=>'Start Time'))
+            ->add('endtime',TimeType::class ,array('label'=>'End Time'))
+            ->add('eventincharge', ChoiceType::class, array(
+                'mapped'  => true,
+                'choices' => $this->getOfficers(),
+                'label'=>'Officer Name'
+            ))
             ->add('totalparticipant', TextType::class ,array('label'=>'Toatal Partticipant'))
             ->add('budget', TextType::class ,array('label'=>'Budget'))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')));
@@ -50,7 +55,7 @@ class EventType extends  AbstractType
 
     private function getOfficers()
     {
-
+        return ResourceAccess::getOfficer();
     }
 
 
