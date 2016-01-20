@@ -121,14 +121,13 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/calender", name="user_profile")
+     * @Route("/calendar", name="user_profile")
      *
      */
 
 
     public  function  calenderAction(){
-
-        return $this->render('Calender/calender.html.twig'
+        return $this->render('Calender/calendar.html.twig'
         );
     }
 

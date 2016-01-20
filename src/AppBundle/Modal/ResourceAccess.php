@@ -9,66 +9,27 @@
 namespace AppBundle\Modal;
 
 
+
 class ResourceAccess
 {
 
-public static function getResourceAvalability($type){
-
+    //got category and give out put as array of resource types and available quantities
+public static function getResourceAvalability($category){
     $db=new DBConnection();
-
-    if($db->connect()){
-        $conn=new DBConnection();
-        $link=$conn->connect();
-
-        if(!($link==null)){
-            $link->query("CREATE VIEW avalabil AS
-            SELECT r_ID,type, description FROM resource WHERE state='AVL' AND type='".$type."'");
-            $query = "SELECT * FROM avalabil";
-            $result = $link->query($query);
-            $resultrow=array();
-            while($row = mysqli_fetch_assoc($result)){
-                array_push($resultrow,$row);
-            }
-            $q="DROP VIEW avalabil";
-            $link->query($q);
-            $db->closeConnection();
-            return $resultrow;
+    $link =  $db->connect();
+    if($link != null){
+        $query = "SELECT rt.type_id,rt.name,rt.available_quantity FROM resource_registration rr INNER JOIN resource_type rt ON rr.type_id = rt.type_id WHERE rr.category = '".$category."'";
+        $result = $link->query($query);
+        $result_array=array();
+        $index=0;
+        while($row = mysqli_fetch_assoc($result)){
+            $result_array[$index] = $row;
+            $index = $index+1;
         }
-
-
-
-
+        $db->closeConnection();
+        return $result_array;
     }
+    $db->closeConnection();
+    return null;
 }
-
-    public static function  getCommingEvent()
-    {
-
-        $db=new DBConnection();
-
-        if($db->connect()) {
-            $conn = new DBConnection();
-            $link = $conn->connect();
-
-            if (!($link == null)) {
-                $link->query("CREATE VIEW avalabil AS
-            SELECT r_ID,type, description FROM resource WHERE state='AVL' AND type='" . $type . "'");
-                $query = "SELECT * FROM avalabil";
-                $result = $link->query($query);
-                $resultrow = array();
-                while ($row = mysqli_fetch_assoc($result)) {
-                    array_push($resultrow, $row);
-                }
-                $q = "DROP VIEW avalabil";
-                $link->query($q);
-                $db->closeConnection();
-                return $resultrow;
-            }
-
-        }
-
-    }
-
-
-
 }
