@@ -207,10 +207,11 @@ class DBAccess
                 $issuedDate=$this->entity->getIssuedDate();
                 $dueDate=$this->entity->getDueDate();
                 $comments=$this->entity->getComments();
+                $quantity = $this->entity->getQuntity();
                 //var_dump($typeID);
 
-                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
-                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments,quantity) VALUES (?,?,?,?,?,?)");
+                $query->bind_param("iisssi",$memberID,$typeID,$issuedDate,$dueDate,$comments,$quantity);
                 $query->execute();
 
             }
