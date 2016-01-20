@@ -32,7 +32,7 @@ class ResourceType extends  AbstractType
 
             ->add('category', ReserveResourceType::class ,array('label'=>'category' ))
             ->add('type_id', ChoiceType::class, array(
-                'mapped'  => false,
+                'mapped'  => true,
                 'choices' => $this->getType(),
                 'label'=>'Type'
             ))
@@ -54,10 +54,14 @@ class ResourceType extends  AbstractType
     private function getType(){
         $type=ResourceAccess::getResourceType();
         $result=array();
+
         foreach($type as  $item){
 
             $result[$item['name']]=$item['type_id'];
+
         }
+
+
         return $result;
 
     }

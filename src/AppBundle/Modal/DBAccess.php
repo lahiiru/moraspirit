@@ -188,6 +188,7 @@ class DBAccess
                 mysqli_commit($link);
             }
             elseif($this->entity_type=='Resource'){
+                mysqli_report(MYSQLI_REPORT_ALL);
                 $category=$this->entity->getCategory();
                 $description=$this->entity->getDescription();
                 $registrationDate=$this->entity->getRegDate();
@@ -196,6 +197,7 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
                 $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
+
                 $query->execute();
             }
 

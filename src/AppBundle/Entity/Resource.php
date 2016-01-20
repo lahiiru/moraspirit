@@ -18,6 +18,10 @@ class Resource
     protected $reg_date;
     protected $value;
 
+
+
+
+
     /**
      * @return mixed
      */
@@ -55,22 +59,7 @@ class Resource
         $this->type_id = $type_id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
 
-    /**
-     * @param mixed $state
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    }
-    protected $state;
 
     /**
      * @return mixed
