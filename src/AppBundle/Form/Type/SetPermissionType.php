@@ -25,14 +25,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Console\Helper\Table;
 
 
-class SetPermisssionType  extends  AbstractType
+class SetPermissionType  extends  AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
 
-            ->add('userid', ReserveResourceType::class ,['label'=>'Type'])
-            ->add('save', SubmitType::class, ['label' => 'Search'])
+            ->add('userid', ReserveResourceType::class ,['label'=>'User Name'])
+            ->add('save', SubmitType::class, ['label' => 'Search']);
+            $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+                $form=$event->getForm();
+                $form->remove('save', SubmitType::class, ['label' => 'Search']);
+                $form->add('type')
+                ->add('save', SubmitType::class, ['label' => 'Apply']);
+
+            });
 
         ;
 
@@ -44,14 +51,13 @@ class SetPermisssionType  extends  AbstractType
         ));
     }
 
+
+
     private  function optionBuild(){
 
         $result=array();
 
-
         return $result;
-
-
 
     }
 

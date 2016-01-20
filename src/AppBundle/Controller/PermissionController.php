@@ -10,9 +10,13 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Form\Type\MemberRoleType;
+use AppBundle\Form\Type\SetPermissionType;
+use AppBundle\Form\Type\SetPermisssionType;
+use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,11 +35,9 @@ class PermissionController extends  Controller
      */
 
     public  function  setPermissionAction(Request $request){
-        $data = array();
-        $form = $this->createFormBuilder($data)
-            ->add('member_id', TextType::class ,array('label'=>'Sport ID' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
-            ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')))
-            ->getForm();
+
+        $data=array();
+        $form = $this->createForm(SetPermissionType::class, $data);
 
         $form->handleRequest($request);
 
@@ -68,6 +70,11 @@ class PermissionController extends  Controller
 
         return new JsonResponse(array('message' => 'Success!'), 200);
     }
+
+    private function getdetail(){
+
+    }
+
 
 
 

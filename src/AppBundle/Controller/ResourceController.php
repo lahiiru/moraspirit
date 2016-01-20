@@ -76,6 +76,8 @@ class ResourceController extends  Controller
 
 
             $db= new DBAccess($resource);
+            $db->insert();
+
 
 
         }

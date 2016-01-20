@@ -52,8 +52,9 @@ public static function getResourceAvalability($category){
         return null;
 
     }
+
     public  static function getOfficer(){
-        
+
         $db=new DBConnection();
         $link =  $db->connect();
         if($link != null) {
