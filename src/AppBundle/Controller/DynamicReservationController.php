@@ -115,9 +115,8 @@ class DynamicReservationController extends  Controller
 
             $task->setIssuedDate(date('Y-m-d', strtotime($date[0])));
             $task->setDueDate(date('Y-m-d', strtotime($date[0])));
-            //$task->setMemberId(1);
-            $h=$this->getUser();
-            var_dump($h->getMember());
+            $task->setMemberId($this->getUser()->getMember()->getStudentId());
+
 
             $db=new DBAccess($task);
             $db->insert();
