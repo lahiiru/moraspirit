@@ -23,7 +23,7 @@ class EventController extends  Controller
 {
 
     /**
-     * @Route("/register/event1", name="event_register1")
+     * @Route("/register/event1", name="event_register1S")
      */
 
     public function eventAction(Request $request)
