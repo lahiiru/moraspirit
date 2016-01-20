@@ -109,6 +109,7 @@ class DynamicReservationController extends  Controller
 
 
             $result=$form->getData();
+            $date = date('Y-m-d', strtotime('01/13/2016'));
 
             if($result->getCatogory()=='SEQP'){
                 return new RedirectResponse($this->generateUrl('reserve_sport'));
