@@ -13,6 +13,7 @@ use AppBundle\Form\Type\DynamicAllocationType;
 use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -26,7 +27,7 @@ class DynamicReservationController extends  Controller
     public function dynamicAction(Request $request)
     {
         $resource = new DynamicAllocation();
-        $formtitle = "New Resource  Registration";
+        $formtitle = " Resource  Reservation";
 
         $form = $this->createForm(DynamicAllocationType::class, $resource);
         $form->handleRequest($request);
@@ -61,6 +62,7 @@ class DynamicReservationController extends  Controller
                 $data->setMemberId(1);
                 print_r($data);
                 $db = new DBAccess($data);
+
                 $db->insert();
 
                 //return $this->render('Profile/profile.html.twig', array(
@@ -69,6 +71,52 @@ class DynamicReservationController extends  Controller
 
 
             }
+
+
+
+
+
+
+        }
+
+
+
+
+        return $this->render('default/index.html.twig', array(
+            'form' => $form->createView(),'title'=>$formtitle,'table'=>false
+        ));
+
+
+
+    }
+
+    /**
+     * @Route("/reserve", name="reserve")
+     */
+
+    public  function  reserve(Request $request){
+
+        $resource = new DynamicAllocation();
+        $formtitle = " Resource  Reservation";
+
+        $form = $this->createForm(DynamicAllocationType::class, $resource);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $result=$form->getData();
+
+            if($result->getCatogory()=='SEQP'){
+                return new RedirectResponse($this->generateUrl('reserve_sport'));
+
+            }
+
+            elseif ($result->getCatogory()=='OTHER')
+            {
+               return new RedirectResponse($this->generateUrl('reserve_other'));
+            }
+
 
 
         }
@@ -80,5 +128,28 @@ class DynamicReservationController extends  Controller
 
 
     }
+
+
+
+    /**
+     * @Route("/reserve/sport", name="reserve_sport")
+     */
+
+    public  function reserveSportAction(Request $request){
+        return $this->render('Profile/profile.html.twig'
+        );
+
+    }
+
+    /**
+     * @Route("/reserve/other", name="reserve_other")
+     */
+
+    public  function reserveOtherAction(Request $request){
+
+        return $this->render('Profile/profile.html.twig'
+        );
+    }
+
 
 }

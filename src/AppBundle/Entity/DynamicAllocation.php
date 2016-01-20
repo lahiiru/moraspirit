@@ -11,28 +11,50 @@ namespace AppBundle\Entity;
 
 class DynamicAllocation
 {
-    protected $resource_id;
+    protected $type_id;
     protected $member_id;
     protected $comments;
     protected $issued_date;
     protected $due_date;
-    protected  $resourcetype;
+    protected $catogory;
+    protected $quntity;
 
     /**
      * @return mixed
      */
-    public function getResourcetype()
+    public function getQuntity()
     {
-        return $this->resourcetype;
+        return $this->quntity;
     }
 
     /**
-     * @param mixed $resourcetype
+     * @param mixed $quntity
      */
-    public function setResourcetype($resourcetype)
+    public function setQuntity($quntity)
     {
-        $this->resourcetype = $resourcetype;
+        $this->quntity = $quntity;
     }
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getCatogory()
+    {
+        return $this->catogory;
+    }
+
+    /**
+     * @param mixed $catogory
+     */
+    public function setCatogory($catogory)
+    {
+        $this->catogory = $catogory;
+    }
+
+
+
 
     /**
      * @return mixed
@@ -54,17 +76,17 @@ class DynamicAllocation
     /**
      * @return mixed
      */
-    public function getResourceId()
+    public function getTypeId()
     {
-        return $this->resource_id;
+        return $this->type_id;
     }
 
     /**
-     * @param mixed $resource_id
+     * @param mixed $type_id
      */
-    public function setResourceId($resource_id)
+    public function setTypeId($type_id)
     {
-        $this->resource_id = $resource_id;
+        $this->type_id = $type_id;
     }
 
 

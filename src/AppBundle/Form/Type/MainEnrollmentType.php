@@ -2,26 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: niroshan
- * Date: 1/15/16
- * Time: 11:49 AM
+ * Date: 1/19/16
+ * Time: 7:49 PM
  */
 
 namespace AppBundle\Form\Type;
-
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ReserveResourceType extends  AbstractType
-{
 
+class MainEnrollmentType extends AbstractType
+{
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Sport Equipment' => 'SEQP',
-                'ROOM' => 'OTHER',
+                'Sport' => 'sport',
+                'Event' => 'event',
             )
         ));
     }

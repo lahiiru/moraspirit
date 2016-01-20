@@ -21,7 +21,7 @@ class MainEventType extends  AbstractType
         $resolver->setDefaults(array(
             'choices' => array(
                 'Sport Event' => 'sport',
-                'Social Event' => 'social',
+                'Social Event' => 'social'
 
             )
         ));

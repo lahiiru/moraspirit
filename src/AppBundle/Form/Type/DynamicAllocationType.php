@@ -32,7 +32,9 @@ class DynamicAllocationType  extends  AbstractType
     {
         $builder
 
-            ->add('resourcetype', ReserveResourceType::class ,['label'=>'Type'])
+            ->add('catogory', ReserveResourceType::class ,['label'=>'Type'])
+            ->add('issued_date',TextType::class,array('label'=>'Reservation period'  ,'attr'=>array('class'=>'form-control pull-right' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
+            ->add('due_date',TextType::class,array('label'=>'Due Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
             ->add('save', SubmitType::class, ['label' => 'Search'])
 
         ;
@@ -40,24 +42,22 @@ class DynamicAllocationType  extends  AbstractType
 
             $form = $event->getForm();
 
-            /*$form->add('resource_id', ChoiceType::class, array(
-                'mapped'  => false,
-                'choices' => $this->optionBuild(),
-                'label'=>'Resource ID'
-            ));
-            */
+            print_r($form->getExtraData());
 
             $form->remove('save', SubmitType::class, ['label' => 'Search']);
 
+            $form->add('catogory', ReserveResourceType::class ,array('label'=>'Type','attr'=>array('class'=>'form-control',"disabled"=>"true")))
+                ->add('issued_date',TextType::class,array('label'=>'Reservation period'  ,'attr'=>array('class'=>'form-control pull-right' ,"disabled"=>"true", 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
+                ->add('due_date',TextType::class,array('label'=>'Due Date'  ,'attr'=>array('class'=>'form-control' ,"disabled"=>"true", 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )));
 
-            $form->add('resourcetype', ReserveResourceType::class ,array('label'=>'Type','attr'  => array("disabled"=>"true")))
-                ->add('resource_id',TextType::class,['label'=>'Resource ID'])
-                ->add('issued_date',TextType::class,array('label'=>'Reserved Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
-                ->add('due_date',TextType::class,array('label'=>'Due Date'  ,'attr'=>array('class'=>'form-control' , 'data-inputmask'=>"'alias': 'yyyy-mm-dd'" ,'data-mask' )))
-               // ->add('issued_date', DateType::class,['label'=>'Reserved Date'])
-                // ->add('due_date', DateType::class,['label'=>'Due Date'])
-                 ->add('comments',TextType::class, ['label' => 'Comments']);
 
+            $form->add('type_id', ChoiceType::class, array(
+                'mapped'  => false,
+                'choices' => $this->optionBuild(),
+                'label'=>'Type'
+            ))
+                ->add('quntity',TextType::class, ['label' => 'Quntity'])
+                ->add('comments',TextType::class, ['label' => 'Comments']);
             $form->add('save', SubmitType::class, ['label' => 'Submit']);
 
 
@@ -73,10 +73,9 @@ class DynamicAllocationType  extends  AbstractType
     }
 
     private  function optionBuild(){
-        $s=ResourceAccess::getResourceAvalability();
-        $result=array();
-        $result[$s[0]['r_ID']]='a';
-        $result[$s[1]['r_ID']]='a';
+
+        $result=array('Ball'=>1,'NetBall'=>2,'Fool'=>3);
+
 
         return $result;
 
