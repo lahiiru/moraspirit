@@ -7,15 +7,11 @@
  */
 
 namespace AppBundle\Controller;
-
-use AppBundle\Entity\Member;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use AppBundle\Form\UserType;
 use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 class RegistrationController extends Controller
 {
     /**
@@ -24,29 +20,26 @@ class RegistrationController extends Controller
     public function registerAction(Request $request)
     {
         // 1) build the form
-        $member = new Member();
-        $form = $this->createFormBuilder($member)
-            ->add('first_name', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->add('save', SubmitType::class, array('label' => 'Create Task'))
-            ->getForm();
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword('$2y$13$vHuOwbQ3EMPnvxbqy/5lS.psOqwWkCvA.fHicfesWdIA7Gpi7vem6');
-
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
+            $user->setPassword($password);
             // 4) save the User!
-            var_dump($user);
-
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
             // ... do any other work - like send them an email, etc
             // maybe set a "flash" success message for the user
-
-            //return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('homepage');
         }
-
-        $title= "New User Registration";
-        return $this->render('registration/register.html.twig', array(
-            'form' => $form->createView(), 'title'=>$title ,'table'=>false
-        ));
+        return $this->render(
+            'registration/register.html.twig',
+            array('form' => $form->createView())
+        );
     }
 }

@@ -12,63 +12,54 @@ namespace AppBundle\Entity;
 class Resource
 {
     protected $resource_id;
-    protected $value;
+    protected $category;
     protected $description;
-    protected $officer_id;
-    protected $type;
+    protected $type_id;
     protected $reg_date;
-    protected $name;
+    protected $value;
+
+
 
 
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getValue()
     {
-        return $this->name;
+        return $this->value;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $value
      */
-    public function setName($name)
+    public function setValue($value)
     {
-        $this->name = $name;
+        $this->value = $value;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
+
+
+
 
     /**
      * @return mixed
      */
-    public function getState()
+    public function getTypeId()
     {
-        return $this->state;
+        return $this->type_id;
     }
 
     /**
-     * @param mixed $state
+     * @param mixed $type_id
      */
-    public function setState($state)
+    public function setTypeId($type_id)
     {
-        $this->state = $state;
+        $this->type_id = $type_id;
     }
-    protected $state;
+
+
 
     /**
      * @return mixed
@@ -89,17 +80,17 @@ class Resource
     /**
      * @return mixed
      */
-    public function getValue()
+    public function getCategory()
     {
-        return $this->value;
+        return $this->category;
     }
 
     /**
-     * @param mixed $value
+     * @param mixed $category
      */
-    public function setValue($value)
+    public function setCategory($category)
     {
-        $this->value = $value;
+        $this->category = $category;
     }
 
     /**
@@ -118,21 +109,7 @@ class Resource
         $this->description = $description;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOfficerId()
-    {
-        return $this->officer_id;
-    }
 
-    /**
-     * @param mixed $officer_id
-     */
-    public function setOfficerId($officer_id)
-    {
-        $this->officer_id = $officer_id;
-    }
 
     /**
      * @return mixed

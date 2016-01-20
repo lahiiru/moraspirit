@@ -81,7 +81,6 @@ class DynamicReservationController extends  Controller
 
         $task = new DynamicAllocation();
         $formtitle = " Resource  Reservation";
-        $date = date('Y-m-d', strtotime('01/13/2016'));
 
 
         if($slug=='sport'){
@@ -95,7 +94,7 @@ class DynamicReservationController extends  Controller
 
         $form = $this->createFormBuilder($task)
             ->add('type_id', ChoiceType::class, array(
-                'mapped'  => false,
+                'mapped'  => true,
                 'choices' => $this->optionBuild("SEQP"),
                 'label'=>'Type'
             ))
@@ -110,13 +109,19 @@ class DynamicReservationController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $result=$form->getData();
             $date=explode( '-', $result->getDaterange());
 
             $task->setIssuedDate(date('Y-m-d', strtotime($date[0])));
             $task->setDueDate(date('Y-m-d', strtotime($date[0])));
+            //$task->setMemberId(1);
+            $h=$this->getUser();
+            var_dump($h->getMember());
 
-            var_dump($task);
+            $db=new DBAccess($task);
+            $db->insert();
+
 
 
         }

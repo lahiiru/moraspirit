@@ -7,13 +7,14 @@
  */
 
 namespace AppBundle\Controller;
-
+// "ALTER TABLE `app_user` ADD UNIQUE(`email`);"
 
 use AppBundle\Entity\Member;
 use AppBundle\Form\Type\MemberType;
 use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class MemberController extends  Controller
@@ -45,7 +46,13 @@ class MemberController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $db= new DBAccess($member);
-            $db->insert();
+            try{
+                $db->insert();
+            }catch(Exception $e){
+
+            }
+
+
 
         }
 

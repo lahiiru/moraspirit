@@ -31,7 +31,7 @@ class DBAccess
                     $this->entity_type = 'Resource';
                     break;
                 case 'AppBundle\Entity\DynamicAllocation':
-                    $this->entity_type = 'ResourceAllocation';
+                    $this->entity_type = 'DynamicAllocation';
                     break;
                 case 'AppBundle\Entity\Instuctor':
                     $this->entity_type = 'Instuctor';
@@ -141,25 +141,7 @@ class DBAccess
                 $query->bind_param("sss",$title,$totPlayers,$type);
                 $query->execute();
             }
-            elseif($this->entity_type == 'Resource'){
-                $obj=$this->entity;
-                mysqli_report(MYSQLI_REPORT_ALL);
-                $value=$obj->getValue();
-                $state=$obj->getState();
-                $type=$obj->getType();
-                $description=$obj->getDescription();
-                $o_id=$obj->getOfficerId();
-                $regDate=$obj->getRegDate();
-                $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (`value`,state,`type`,description,o_id,reg_date,`name`) VALUES (?,?,?,?,?,?,?)");
-                $query->bind_param("dsssiss",$value,$state,$type,$description,$o_id,$regDate,$name);
-                var_dump($query);
-                $query->execute();
-
-
-
-            }
             elseif($this->entity_type=='PracticalSchedule'){
                 $studentID=$this->entity->getStudentID();
                 $instructorID=$this->entity->getInstructorID();
@@ -205,6 +187,33 @@ class DBAccess
                 mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$last_id."','".$eventIncharge."')");
                 mysqli_commit($link);
             }
+            elseif($this->entity_type=='Resource'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $category=$this->entity->getCategory();
+                $description=$this->entity->getDescription();
+                $registrationDate=$this->entity->getRegDate();
+                $typeId=$this->entity->getTypeId();
+                $value=$this->entity->getValue();
+
+                $query=$link->prepare("INSERT INTO resource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
+                $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
+
+                $query->execute();
+            }
+            elseif($this->entity_type=='DynamicAllocation'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $memberID=$this->entity->getMemberId();
+                $typeID=$this->entity->getTypeId();
+                $issuedDate=$this->entity->getIssuedDate();
+                $dueDate=$this->entity->getDueDate();
+                $comments=$this->entity->getComments();
+                //var_dump($typeID);
+
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
+                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query->execute();
+
+            }
 
            // $db->executeQuery($query);
             $db->closeConnection();
@@ -223,6 +232,7 @@ class DBAccess
                 $query = "SELECT * FROM member WHERE id = ".$this->entity->getStudentId();
                 $result = $link->query($query);
                 while($row = mysqli_fetch_assoc($result)){
+                    $member->setStudentId($row['id']);
                     $member->setFirstName($row['first_name']);
                     $member->setLastName($row['last_name']);
                     $member->setDeptName($row['dept_name']);
@@ -248,7 +258,7 @@ class DBAccess
                 $result = $db->executeQuery($query);
                 while($row = mysqli_fetch_assoc($result)){
                     $resource->setResourceId($row[1]);
-                    $resource->setValue($row[2]);
+                    $resource->setCategory($row[2]);
                     $resource->setDescription($row[3]);
                     $resource->setOfficerId($row[4]);
                 }
@@ -256,6 +266,7 @@ class DBAccess
                 return $resource;
             }
             elseif($this->entity_type=='DynamicAllocation'){
+
                 $resourceAlloc = new ResourceAllocation();
                 foreach($this->entity as $property => $value){
                     $resourceAlloc->$property($value);
