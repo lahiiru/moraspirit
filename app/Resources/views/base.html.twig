@@ -520,11 +520,13 @@
                 <li class="active">Dashboard</li>
             </ol>
 
-
             {% block root %}
 
             {% endblock %}
         </section>
+        {% block calendar %}
+
+        {% endblock %}
 
      </div>
 
@@ -565,7 +567,7 @@
     {% endblock %}
     {% block javascript2 %}
 
-    {% endblock javascript2 %}
+    {% endblock %}
 
 
     </div>
