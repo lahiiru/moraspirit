@@ -97,9 +97,19 @@
         <!-- Page specific script -->
 
         <script src="{{ asset('bundles/plugins/fullcalendar/fullcalendar.min.js') }}" ></script>
-        <script src="{{ asset('bundles/plugins/fullcalendar//moment.min.js') }}" ></script>
+        <script src="{{ asset('bundles/plugins/fullcalendar/moment.min.js') }}" ></script>
         <script src="{{ asset('bundles/plugins/fullcalendar/fullcalendar.js') }}" ></script>
         <script>
+
+            $(document).ready(function(){
+                alert("reader");
+                var event1 = new Object();
+                event1.title = 'text to be shown';
+                var date1= new Date(2016,0,29);
+                event1.start = date1;
+                $('#calendar').fullCalendar( 'renderEvent', event1);
+            });
+
             $(function () {
 
                 /* initialize the external events
@@ -255,6 +265,9 @@
                     $("#new-event").val("");
                 });
             });
+
+
+
         </script>
 
 
