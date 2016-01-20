@@ -19,8 +19,8 @@ class Member
     protected $email;
     protected $mobile;
     protected $facultyname;
-    protected  $gender;
-    protected  $birthday;
+    protected $gender;
+    protected $birthday;
     protected $bloodgroup;
     protected $nic;
     protected $address;

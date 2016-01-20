@@ -26,7 +26,7 @@ class RegistrationController extends Controller
         // 1) build the form
         $member = new Member();
         $form = $this->createFormBuilder($member)
-            ->add('', TextType::class)
+            ->add('first_name', TextType::class)
             ->add('dueDate', DateType::class)
             ->add('save', SubmitType::class, array('label' => 'Create Task'))
             ->getForm();

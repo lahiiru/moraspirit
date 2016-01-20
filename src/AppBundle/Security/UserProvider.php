@@ -13,6 +13,7 @@
  */
 namespace AppBundle\Security;
 
+use AppBundle\Entity\Member;
 use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\DBConnection;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -25,21 +26,17 @@ class UserProvider implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {
-        $db = new DBConnection();
-        $link=$db->connect();
 
-        $query = "SELECT * FROM app_user WHERE email ='$username'";
-        $result = $link->query($query);
-        $user = null;
-        while($row = mysqli_fetch_assoc($result)){
-            $user = new User($row['email'],$row['password'],"",unserialize($row['role']));
-        }
+
+        $user = $this->getUser($username);
+
+
         if($user==null){
             throw new UsernameNotFoundException(
                 sprintf('Username "%s" does not exist.', $username)
             );
         }
-        $db->closeConnection();
+
         //new User("$username", password_hash("1234", PASSWORD_BCRYPT, array('cost' => 13)), "1234", ["ROLE_USER","ROLE_ADMIN"]);
         // make a call to your webservice here
         return $user;
@@ -48,6 +45,29 @@ class UserProvider implements UserProviderInterface
             sprintf('Username "%s" does not exist.', $username)
         );
 */
+    }
+
+    private function getUser($username){
+        $db = new DBConnection();
+        $link=$db->connect();
+
+        $query = "SELECT * FROM app_user WHERE email ='$username'";
+        $result = $link->query($query);
+        $user = null;
+        $member_id=0;
+        while($row = mysqli_fetch_assoc($result)){
+            $user = new User($row['email'],$row['password'],"",unserialize($row['role']));
+            $member_id=$row['id'];
+
+        }
+        $db->closeConnection();
+        $member = new Member();
+        $member->setStudentId($member_id);
+
+        $da = new DBAccess($member);
+        $user->setMember($da->getDetail());
+
+        return $user;
     }
 
     public function refreshUser(UserInterface $user)
