@@ -276,4 +276,8 @@ class DBAccess
             echo "Cannot connect to database";
         }
     }
+
+    public function getCalendarEvents(){
+
+    }
 }

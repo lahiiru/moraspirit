@@ -17,7 +17,7 @@ use AppBundle\Form\Type\InstructorType;
 use AppBundle\Form\Type\MemberType;
 use AppBundle\Form\Type\ResourceAllocType;
 use AppBundle\Form\Type\ResourceType;
-use AppBundle\Modal\DBAccess;
+use AppBundle\Modal\EventAccess;
 use AppBundle\Modal\ResourceAccess;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -40,7 +40,11 @@ class EventCalendarController extends Controller{
      *
      */
     public  function  calenderAction(){
-        return $this->render('Calender/calendar.html.twig',["v1"=>"test"]
+
+        $events = EventAccess::getEvents();
+        $length = count($events);
+
+        return $this->render('Calender/calendar.html.twig',["eventlist"=>$events]
         );
     }
 }
