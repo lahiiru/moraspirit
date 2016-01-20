@@ -216,6 +216,7 @@ class DBAccess
                 $query = "SELECT * FROM member WHERE id = ".$this->entity->getStudentId();
                 $result = $link->query($query);
                 while($row = mysqli_fetch_assoc($result)){
+                    $member->setStudentId($this->entity->getStudentId());
                     $member->setFirstName($row['first_name']);
                     $member->setLastName($row['last_name']);
                     $member->setDeptName($row['dept_name']);
