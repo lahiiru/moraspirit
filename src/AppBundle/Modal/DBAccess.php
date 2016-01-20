@@ -216,6 +216,18 @@ class DBAccess
                 $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
                 $query->execute();
             }
+            elseif($this->entity_type=='DynamicAllocation'){
+                $memberID=$this->entity->getMemberId();
+                $typeID=$this->entity->getTypeId();
+                $issuedDate=$this->entity->getIssuedDate();
+                $dueDate=$this->entity->getDueDate();
+                $comments=$this->entity->getComments();
+
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
+                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query->execute();
+
+            }
 
            // $db->executeQuery($query);
             $db->closeConnection();
