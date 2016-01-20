@@ -11,7 +11,9 @@ namespace AppBundle\Entity;
 
 class Officer
 {
-    private $memberId;
+    protected $memberId;
+    protected $roles;
+    protected $appointedDate;
 
     /**
      * @return mixed
@@ -32,6 +34,22 @@ class Officer
     /**
      * @return mixed
      */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getAppointedDate()
     {
         return $this->appointedDate;
@@ -45,23 +63,7 @@ class Officer
         $this->appointedDate = $appointedDate;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
 
-    /**
-     * @param mixed $roles
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-    }
-    private $appointedDate;
-    private $roles;
 
 
 
