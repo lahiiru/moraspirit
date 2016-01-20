@@ -23,6 +23,25 @@ class Event
     protected  $date;
     protected $totalparticipant;
     protected $eventIncharge;
+    protected $daterange;
+
+    /**
+     * @return mixed
+     */
+    public function getDaterange()
+    {
+        return $this->daterange;
+    }
+
+    /**
+     * @param mixed $daterange
+     */
+    public function setDaterange($daterange)
+    {
+        $this->daterange = $daterange;
+    }
+
+
 
 
     /**

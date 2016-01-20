@@ -52,5 +52,9 @@ public static function getResourceAvalability($category){
         return null;
 
     }
+    public  static function getOfficer(){
+        return array('Saman'=>1, 'Nimal'=>4 );
+    }
+
 
 }
