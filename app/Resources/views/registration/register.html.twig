@@ -81,7 +81,12 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ title }}</h3>
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.plainPassword.first) }}
+                    {{ form_row(form.plainPassword.second) }}
+
+                    <button type="submit">Register!</button>
                     {{ form_end(form) }}
                 </div>
             </div>
