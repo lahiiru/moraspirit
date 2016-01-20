@@ -12,6 +12,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Resource;
 use AppBundle\Form\Type\ResourceType;
 use AppBundle\Modal\DBAccess;
+use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -85,7 +86,7 @@ class ResourceController extends  Controller
     }
 
     private  function  getOfficername(){
-        return array('Saman'=>1, 'Nimal'=>4 );
+        return ResourceAccess::getOfficer();
     }
 
 

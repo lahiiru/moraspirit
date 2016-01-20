@@ -221,10 +221,11 @@ class DBAccess
                 $issuedDate=$this->entity->getIssuedDate();
                 $dueDate=$this->entity->getDueDate();
                 $comments=$this->entity->getComments();
+                $quantity = $this->entity->getQuntity();
                 //var_dump($typeID);
 
-                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
-                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments,quantity) VALUES (?,?,?,?,?,?)");
+                $query->bind_param("iisssi",$memberID,$typeID,$issuedDate,$dueDate,$comments,$quantity);
                 $query->execute();
 
             }
@@ -246,7 +247,7 @@ class DBAccess
                 $query = "SELECT * FROM member WHERE id = ".$this->entity->getStudentId();
                 $result = $link->query($query);
                 while($row = mysqli_fetch_assoc($result)){
-                    $member->setStudentId($this->entity->getStudentId());
+                    $member->setStudentId($row['id']);
                     $member->setFirstName($row['first_name']);
                     $member->setLastName($row['last_name']);
                     $member->setDeptName($row['dept_name']);
@@ -300,5 +301,9 @@ class DBAccess
         else{
             echo "Cannot connect to database";
         }
+    }
+
+    public function getCalendarEvents(){
+
     }
 }
