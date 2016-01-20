@@ -114,12 +114,32 @@ class DBAccess
                 $Nic=$obj->getNic();
                 $Address=$obj->getAddress();
                 $IndexNu=$obj->getIndexNu();
+                $password='$2y$13$0aW6zsmFJEZKWgS8o5kK..U3KOP6mWC6rBl9VLPvEMuH6j8/1mLlO';
+                $roles='a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}';
+                $isActice=1;
 
 
-                $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,blood_group,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                mysqli_autocommit($link,FALSE);
+                $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
                 $query->execute();
 
+                $last_id = mysqli_insert_id($link);
+                mysqli_query($link,"INSERT INTO app_user(email,password,role,is_active) VALUES('".$Email."','".$password."','".$roles."','".$isActice."')");
+                mysqli_commit($link);
+
+            }
+
+            elseif($this->entity_type=='Sport')
+            {
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj=$this->entity;
+                $title = $obj->getTitle();
+                $totPlayers = $obj->getTotalPlayers();
+                $type = $obj->getType();
+                $query =$link->prepare("INSERT INTO sport  (title ,tot_players ,type) VALUES (?,?,?)");
+                $query->bind_param("sss",$title,$totPlayers,$type);
+                $query->execute();
             }
             elseif($this->entity_type == 'Resource'){
                 $obj=$this->entity;
@@ -162,6 +182,30 @@ class DBAccess
                 $query->execute();
 
             }
+
+            elseif($this->entity_type == 'Event'){
+                mysqli_report(MYSQLI_REPORT_ALL);
+                $obj = $this->entity;
+                $eName = $obj->getEventName();
+                $tParticipants = $obj->getTotalparticipant();
+                $eType = $obj->getEventtype();
+                $startDate = $obj->getStartdate();
+                $endDate = $obj->getEndDate();
+                $startTime = $obj->getStartTime();
+                $endTime = $obj->getEndTime();
+                $budget  = $obj-> getBudget();
+                $description = $obj->getDescription();
+                $location = $obj->getLocation();
+                $eventIncharge = $obj->getEventIncharge();
+                // Set autocommit to off
+                mysqli_autocommit($link,FALSE);
+                mysqli_query($link,"INSERT INTO event (event_name,tot_participants,event_type,start_date,end_date,start_time,end_time,budget,description,location)
+                VALUES ('".$eName."','".$tParticipants."','".$eType."','".$startDate."','".$endDate."','".$startTime."','".$endTime."','".$budget."','".$description."','".$location."')");
+                $last_id = mysqli_insert_id($link);
+                mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$last_id."','".$eventIncharge."')");
+                mysqli_commit($link);
+            }
+
            // $db->executeQuery($query);
             $db->closeConnection();
         }
