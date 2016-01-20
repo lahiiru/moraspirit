@@ -38,10 +38,14 @@ class EventController extends  Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
 
+            $date=explode( '-', $event->getDaterange());
+
+            $event->setStartdate((date('Y-m-d', strtotime($date[0]))));
+            $event->setEnddate(date('Y-m-d', strtotime($date[0])));
             $event->setStarttime($event->getStarttime()->getTimestamp());
             $event->setEndtime( $event->getEndtime()->getTimestamp());
 
-            var_dump($event);
+           // var_dump($event);
 
             $db= new DBAccess($event);
             $db->insert();

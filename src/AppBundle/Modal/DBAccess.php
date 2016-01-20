@@ -36,6 +36,14 @@ class DBAccess
                 case 'AppBundle\Entity\Instuctor':
                     $this->entity_type = 'Instuctor';
                     break;
+                case 'AppBundle\Entity\Event':
+                    $this->entity_type = 'Event';
+                    break;
+                case 'AppBundle\Entity\NewResourceType':
+                    $this->entity_type = 'NewResourceType';
+                    break;
+
+
             }
         }
 
@@ -213,6 +221,13 @@ class DBAccess
                 $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments,quantity) VALUES (?,?,?,?,?,?)");
                 $query->bind_param("iisssi",$memberID,$typeID,$issuedDate,$dueDate,$comments,$quantity);
                 $query->execute();
+
+            }
+
+            elseif ($this->entity_type=='NewResourceType')
+            {
+                mysqli_report(MYSQLI_REPORT_ALL);
+                
 
             }
 
