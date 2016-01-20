@@ -26,7 +26,7 @@ class DynamicReservationController extends  Controller
     public function dynamicAction(Request $request)
     {
         $resource = new DynamicAllocation();
-        $formtitle = "New Resource  Registration";
+        $formtitle = " Resource  Reservation";
 
         $form = $this->createForm(DynamicAllocationType::class, $resource);
         $form->handleRequest($request);
@@ -61,6 +61,7 @@ class DynamicReservationController extends  Controller
                 $data->setMemberId(1);
                 print_r($data);
                 $db = new DBAccess($data);
+
                 $db->insert();
 
                 //return $this->render('Profile/profile.html.twig', array(

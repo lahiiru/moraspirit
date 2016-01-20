@@ -4,6 +4,8 @@
 
     <link href="{{ asset('bundles/dist/css/AdminLTE.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/dist/css/skins/_all-skins.min.css') }}" rel="stylesheet" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('bundles/dist/css/skins/_all-skins.min.css') }}">
 
 {% endblock cssblock %}
 
@@ -139,9 +141,9 @@
     <script>
         $(function () {
             //Date range picker
-            $('#dynamic_allocation_resource_id').daterangepicker();
+            $('#dynamic_allocation_issued_date').daterangepicker();
             //Date range picker with time picker
-            $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+            $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'YYYY-DD-MM h:mm A'});
             //Date range as a button
             $('#daterange-btn').daterangepicker(
                     {
@@ -157,7 +159,7 @@
                         endDate: moment()
                     },
                     function (start, end) {
-                        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                        $('#reportrange span').html(start.format('YYYY-MM-DD') + ' / ' + end.format('YYYY-MM-DD'));
                     }
             );
         });

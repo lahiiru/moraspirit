@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
@@ -28,23 +29,21 @@ class EnrollmentType extends  AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
+
         $builder
-            ->add('Event', ChoiceType::class, array(
-                'mapped' => false,
-                'choices' => $this->getEventId(),
-                'label' => 'Event'
-            ))
+            ->add('type', MainEventType::class ,array('label'=>'Event'))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr' => array('class' => 'btn btn-block btn-success btn-lg')));
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
 
             $form = $event->getForm();
 
-
+            $d=$form->getData();
+            print_r($d);
             $form->remove('save', SubmitType::class, ['label' => 'Search']);
 
 
-            $form->add('Event', ChoiceType::class ,array('label'=>'Event','attr'  => array("disabled"=>"true")));
+            $form->add('type', MainEventType::class ,array('label'=>'Event','attr'  => array("disabled"=>"true")));
 
             $form->add('save', SubmitType::class, ['label' => 'Submit']);
 
@@ -54,17 +53,7 @@ class EnrollmentType extends  AbstractType
     }
 
 
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array());
 
-    }
-
-    private function getEventId()
-    {
-        return array('Event' => 1, 'Sport' => 2);
-
-    }
 
 
 
