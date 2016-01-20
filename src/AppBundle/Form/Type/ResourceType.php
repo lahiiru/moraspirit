@@ -9,8 +9,10 @@
 namespace AppBundle\Form\Type;
 
 
+use AppBundle\Modal\ResourceAccess;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,11 +31,14 @@ class ResourceType extends  AbstractType
         $builder
 
             ->add('category', ReserveResourceType::class ,array('label'=>'category' ))
-            ->add('type_id',IntegerType::class ,array('label'=>'Officer ID' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
-            ->add('value', NumberType::class , array('label'=>'Value' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
+            ->add('type_id', ChoiceType::class, array(
+                'mapped'  => false,
+                'choices' => $this->getType(),
+                'label'=>'Type'
+            ))
+            ->add('value', MoneyType::class , array('label'=>'Value' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
 
             ->add('description', TextType::class ,array('label'=>'Description' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Student id ( eg . 140678N )')))
-            ->add('officer_id',IntegerType::class ,array('label'=>'Officer ID' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Mobile Number')))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success btn-lg')));
         ;
     }
@@ -47,7 +52,13 @@ class ResourceType extends  AbstractType
     }
 
     private function getType(){
-        return array( 'Cricket'=>1 , 'VollyBall'=>2 , 'Netball'=>3);
+        $type=ResourceAccess::getResourceType();
+        $result=array();
+        foreach($type as  $item){
+
+            $result[$item['name']]=$item['type_id'];
+        }
+        return $result;
 
     }
 
