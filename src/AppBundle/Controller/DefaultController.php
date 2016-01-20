@@ -118,19 +118,4 @@ class DefaultController extends Controller
         return $this->render('Profile/profile.html.twig'
          );
     }
-
-
-    /**
-     * @Route("/calendar", name="user_profile")
-     *
-     */
-
-
-    public  function  calenderAction(){
-        return $this->render('Calender/calendar.html.twig'
-        );
-    }
-
-
-
 }
