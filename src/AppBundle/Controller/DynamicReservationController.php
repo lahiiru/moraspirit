@@ -109,7 +109,16 @@ class DynamicReservationController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
+            $result=$form->getData();
+            $date=explode( '-', $result->getDaterange());
+
+            $task->setIssuedDate(date('Y-m-d', strtotime($date[0])));
+            $task->setDueDate(date('Y-m-d', strtotime($date[0])));
+
+            var_dump($task);
+
+
         }
 
 
