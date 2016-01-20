@@ -9,9 +9,11 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\NewResourceType;
 use AppBundle\Entity\Resource;
 use AppBundle\Form\Type\ResourceType;
 use AppBundle\Modal\DBAccess;
+use AppBundle\Modal\ResourceAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -53,7 +55,7 @@ class ResourceController extends  Controller
      */
 
     public  function  newresourcetypeAction(Request $request){
-        $resource =array();
+        $resource =new NewResourceType();
 
         $formtitle="New Resource Type";
         $form = $this->createFormBuilder($resource)
@@ -72,8 +74,9 @@ class ResourceController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
             $db= new DBAccess($resource);
-            var_dump($form->getData());
+
 
         }
 
@@ -85,7 +88,7 @@ class ResourceController extends  Controller
     }
 
     private  function  getOfficername(){
-        return array('Saman'=>1, 'Nimal'=>4 );
+        return ResourceAccess::getOfficer();
     }
 
 

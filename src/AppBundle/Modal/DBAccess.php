@@ -12,6 +12,7 @@ use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\User;
 use AppBundle\Entity\ResourceAllocation;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 $r=new DBAccess(null);
 $r->insert();
@@ -20,7 +21,15 @@ class DBAccess
 {
     private $entity_type;
     private $entity;
+    private $error=false;
+    function myErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+        if(!$this->error){
+            $error=true;
+        }
+        exit;
 
+    }
     function __construct($entity){
         if ($entity != null) {
             $this->entity = $entity;
@@ -32,14 +41,21 @@ class DBAccess
                     $this->entity_type = 'Resource';
                     break;
                 case 'AppBundle\Entity\DynamicAllocation':
-                    $this->entity_type = 'ResourceAllocation';
+                    $this->entity_type = 'DynamicAllocation';
                     break;
                 case 'AppBundle\Entity\Instuctor':
                     $this->entity_type = 'Instuctor';
                     break;
+                case 'AppBundle\Entity\Event':
+                    $this->entity_type = 'Event';
+                    break;
+                case 'AppBundle\Entity\NewResourceType':
+                    $this->entity_type = 'NewResourceType';
+                    break;
+
+
             }
         }
-
     }
 
     public function resetPassword($password){
@@ -114,7 +130,7 @@ class DBAccess
         if($link != null){
             $query = "";
             if($this->entity_type == 'Member'){
-                mysqli_report(MYSQLI_REPORT_ALL);
+                //mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $FirstName=$obj->getFirstName();
                 $LastName=$obj-> getLastName();
@@ -135,13 +151,19 @@ class DBAccess
 
 
                 mysqli_autocommit($link,FALSE);
-                $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
-                $query->execute();
 
-                $last_id = mysqli_insert_id($link);
-                mysqli_query($link,"INSERT INTO app_user(email,password,role,is_active) VALUES('".$Email."','".$password."','".$roles."','".$isActice."')");
-                mysqli_commit($link);
+                    $query = $link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    $val=$query->bind_param("sssssssssssss", $FirstName, $LastName, $DeptName, $RegisterDate, $Email, $Mobile, $Gender, $Facultyname, $Birthday, $Bloodgroup, $Nic, $Address, $IndexNu);
+                    $val->execute();
+
+
+                    $last_id = mysqli_insert_id($link);
+                    $result=mysqli_query($link, "INSERT INTO app_user(id,email,password,role,is_active) VALUES($last_id,'" . $Email . "','" . $password . "','" . $roles . "','" . $isActice . "')");
+                    $result->execute();
+                    mysqli_commit($link);
+
+                    return !$this->error;
+
 
             }
 
@@ -216,15 +238,25 @@ class DBAccess
                 $query->execute();
             }
             elseif($this->entity_type=='DynamicAllocation'){
+                mysqli_report(MYSQLI_REPORT_ALL);
                 $memberID=$this->entity->getMemberId();
                 $typeID=$this->entity->getTypeId();
                 $issuedDate=$this->entity->getIssuedDate();
                 $dueDate=$this->entity->getDueDate();
                 $comments=$this->entity->getComments();
+                $quantity = $this->entity->getQuntity();
+                //var_dump($typeID);
 
-                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments) VALUES (?,?,?,?,?)");
-                $query->bind_param("iisss",$memberID,$typeID,$issuedDate,$dueDate,$comments);
+                $query=$link->prepare("INSERT INTO dynamic_allocation(m_id,type_id,issued_date,due_date,comments,quantity) VALUES (?,?,?,?,?,?)");
+                $query->bind_param("iisssi",$memberID,$typeID,$issuedDate,$dueDate,$comments,$quantity);
                 $query->execute();
+
+            }
+
+            elseif ($this->entity_type=='NewResourceType')
+            {
+                mysqli_report(MYSQLI_REPORT_ALL);
+                
 
             }
 
@@ -245,6 +277,7 @@ class DBAccess
                 $query = "SELECT * FROM member WHERE id = ".$this->entity->getStudentId();
                 $result = $link->query($query);
                 while($row = mysqli_fetch_assoc($result)){
+                    $member->setStudentId($row['id']);
                     $member->setFirstName($row['first_name']);
                     $member->setLastName($row['last_name']);
                     $member->setDeptName($row['dept_name']);
@@ -278,6 +311,7 @@ class DBAccess
                 return $resource;
             }
             elseif($this->entity_type=='DynamicAllocation'){
+
                 $resourceAlloc = new ResourceAllocation();
                 foreach($this->entity as $property => $value){
                     $resourceAlloc->$property($value);
@@ -297,5 +331,9 @@ class DBAccess
         else{
             echo "Cannot connect to database";
         }
+    }
+
+    public function getCalendarEvents(){
+
     }
 }
