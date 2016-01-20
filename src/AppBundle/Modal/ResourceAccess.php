@@ -42,8 +42,9 @@ public static function getResourceAvalability($category){
             $result = $link->query($query);
             $result_array=array();
             while($row = mysqli_fetch_assoc($result)){
-                print_r($row);
+                array_push($result_array,$row);
             }
+
             $db->closeConnection();
             return $result_array;
         }

@@ -141,25 +141,7 @@ class DBAccess
                 $query->bind_param("sss",$title,$totPlayers,$type);
                 $query->execute();
             }
-            elseif($this->entity_type == 'Resource'){
-                $obj=$this->entity;
-                mysqli_report(MYSQLI_REPORT_ALL);
-                $value=$obj->getValue();
-                $state=$obj->getState();
-                $type=$obj->getType();
-                $description=$obj->getDescription();
-                $o_id=$obj->getOfficerId();
-                $regDate=$obj->getRegDate();
-                $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (`value`,state,`type`,description,o_id,reg_date,`name`) VALUES (?,?,?,?,?,?,?)");
-                $query->bind_param("dsssiss",$value,$state,$type,$description,$o_id,$regDate,$name);
-                var_dump($query);
-                $query->execute();
-
-
-
-            }
             elseif($this->entity_type=='PracticalSchedule'){
                 $studentID=$this->entity->getStudentID();
                 $instructorID=$this->entity->getInstructorID();
@@ -206,6 +188,7 @@ class DBAccess
                 mysqli_commit($link);
             }
             elseif($this->entity_type=='Resource'){
+                mysqli_report(MYSQLI_REPORT_ALL);
                 $category=$this->entity->getCategory();
                 $description=$this->entity->getDescription();
                 $registrationDate=$this->entity->getRegDate();
@@ -214,6 +197,7 @@ class DBAccess
 
                 $query=$link->prepare("INSERT INTO resource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
                 $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
+
                 $query->execute();
             }
             elseif($this->entity_type=='DynamicAllocation'){
