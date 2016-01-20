@@ -98,7 +98,7 @@ class DBAccess
         $link=$db->connect();
         if($link != null){
             $query = "";
-            if($this->entity_type == 'Member'){                           //
+            if($this->entity_type == 'Member'){
                 mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $FirstName=$obj->getFirstName();
@@ -172,21 +172,24 @@ class DBAccess
 
     public function getDetail(){
         $db=new DBConnection();
-        if($db->connect()){
+        $link=$db->connect();
+        if($link){
             if($this->entity_type == 'Member'){
                 $member = new Member();
-                foreach($this->entity as $property => $value){
-                    $member->$property($value);
-                }
-                $query = "SELECT * FROM member WHERE s_ID = '".$member->getStudentId()."'";
-                $result = $db->executeQuery($query);
+                $query = "SELECT * FROM member WHERE id = ".$this->entity->getStudentId();
+                $result = $link->query($query);
                 while($row = mysqli_fetch_assoc($result)){
-                    $member->setFirstName($row[1]);
-                    $member->setLastName($row[2]);
-                    $member->setDeptName($row[3]);
-                    $member->setRegisterDate($row[4]);
-                    $member->setEmail($row[5]);
-                    $member->setMobile($row[6]);
+                    $member->setFirstName($row['first_name']);
+                    $member->setLastName($row['last_name']);
+                    $member->setDeptName($row['dept_name']);
+                    $member->setRegisterDate($row['register_date']);
+                    $member->setEmail($row['email']);
+                    $member->setMobile($row['mobile']);
+                    $member->setIndexNu($row['index_no']);
+                    $member->setBirthday($row['birthday']);
+                    $member->setGender($row['gender']);
+                    $member->setFacultyname($row['faculty_name']);
+                    $member->setNic($row['NIC']);
                 }
                 $db->closeConnection();
                 return $member;
