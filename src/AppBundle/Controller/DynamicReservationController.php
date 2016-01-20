@@ -109,12 +109,7 @@ class DynamicReservationController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-<<<<<<< Updated upstream
-            print_r($form->getData());
-
-=======
-            //insert query
->>>>>>> Stashed changes
+            
         }
 
 
