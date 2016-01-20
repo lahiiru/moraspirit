@@ -11,6 +11,7 @@ namespace AppBundle\Modal;
 use AppBundle\Entity\Member;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\ResourceAllocation;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 $r=new DBAccess(null);
 $r->insert();
@@ -19,7 +20,15 @@ class DBAccess
 {
     private $entity_type;
     private $entity;
+    private $error=false;
+    function myErrorHandler($errno, $errstr, $errfile, $errline)
+    {
+        if(!$this->error){
+            $error=true;
+        }
+        exit;
 
+    }
     function __construct($entity){
         if ($entity != null) {
             $this->entity = $entity;
@@ -46,7 +55,6 @@ class DBAccess
 
             }
         }
-
     }
 
     public function update(){
@@ -107,7 +115,7 @@ class DBAccess
         if($link != null){
             $query = "";
             if($this->entity_type == 'Member'){
-                mysqli_report(MYSQLI_REPORT_ALL);
+                //mysqli_report(MYSQLI_REPORT_ALL);
                 $obj=$this->entity;
                 $FirstName=$obj->getFirstName();
                 $LastName=$obj-> getLastName();
@@ -128,13 +136,19 @@ class DBAccess
 
 
                 mysqli_autocommit($link,FALSE);
-                $query =$link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                $query->bind_param("sssssssssssss",$FirstName,$LastName,$DeptName,$RegisterDate,$Email,$Mobile,$Gender,$Facultyname,$Birthday,$Bloodgroup,$Nic,$Address,$IndexNu);
-                $query->execute();
 
-                $last_id = mysqli_insert_id($link);
-                mysqli_query($link,"INSERT INTO app_user(email,password,role,is_active) VALUES('".$Email."','".$password."','".$roles."','".$isActice."')");
-                mysqli_commit($link);
+                    $query = $link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    $val=$query->bind_param("sssssssssssss", $FirstName, $LastName, $DeptName, $RegisterDate, $Email, $Mobile, $Gender, $Facultyname, $Birthday, $Bloodgroup, $Nic, $Address, $IndexNu);
+                    $val->execute();
+
+
+                    $last_id = mysqli_insert_id($link);
+                    $result=mysqli_query($link, "INSERT INTO app_user(id,email,password,role,is_active) VALUES($last_id,'" . $Email . "','" . $password . "','" . $roles . "','" . $isActice . "')");
+                    $result->execute();
+                    mysqli_commit($link);
+
+                    return !$this->error;
+
 
             }
 

@@ -19,11 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MemberController extends  Controller
 {
-
     /**
      * @Route("/register/member", name="student_nregistration")
      */
-
     public function newmemberAction(Request $request)
     {
 
@@ -46,13 +44,12 @@ class MemberController extends  Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $db= new DBAccess($member);
-            try{
-                $db->insert();
-            }catch(Exception $e){
-
+            ECHO Var_dump($db->insert());
+            if(!$db->insert()){
+                return $this->render('default/index.html.twig', array(
+                    'form' => $form->createView() , 'title'=>$title ,'table'=>false, "error_description"=>"A member with entered email is already exists."
+                ));
             }
-
-
 
         }
 
