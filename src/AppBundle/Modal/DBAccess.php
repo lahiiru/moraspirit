@@ -123,7 +123,7 @@ class DBAccess
             }
             elseif($this->entity_type == 'Resource'){
                 $obj=$this->entity;
-
+                mysqli_report(MYSQLI_REPORT_ALL);
                 $value=$obj->getValue();
                 $state=$obj->getState();
                 $type=$obj->getType();
@@ -132,15 +132,34 @@ class DBAccess
                 $regDate=$obj->getRegDate();
                 $name=$obj->getName();
 
-                $query=$link->prepare("INSERT INTO resource (value,type,state,description,o_id,reg_date,name) VALUES (?,?,?,?,?,?,?)");
-                $query->bind_param("dsssiss",$value,$type,$state,$description,$o_id,$regDate,$name);
+                $query=$link->prepare("INSERT INTO resource (`value`,state,`type`,description,o_id,reg_date,`name`) VALUES (?,?,?,?,?,?,?)");
+                $query->bind_param("dsssiss",$value,$state,$type,$description,$o_id,$regDate,$name);
+                var_dump($query);
+                $query->execute();
 
 
 
             }
-            elseif($this->entity_type=='DyanamicAllocation'){
-                //$query = "INSERT INTO resource_alloc (s_ID,r_ID,comments,issued_date,due_date) VALUES ('".$this->entity->getMemberId()."','".$this->entity->getResourceId()."','".$this->entity->getComments()."','".$this->entity->getIssuedDate()."','".$this->entity->getDueDate()."')";
-                $query=$link->prepare("INSERT INTO dynamic_allocation(s_id,r_id,issued_date,due_date,comments) VALUES(?,?,?,?,?)");
+            elseif($this->entity_type=='PracticalSchedule'){
+                $studentID=$this->entity->getStudentID();
+                $instructorID=$this->entity->getInstructorID();
+                $sportID=$this->entity->getSportID();
+                $slotName=$this->entity->getSportName();
+                $day=$this->entity->getDay();
+
+                $query=$link->prepare("INSERT INTO practical_schedule(s_id,i_id,sport_id,slot_name,day) VALUES(?,?,?,?,?)");
+                $query->bind_param("iiiss",$studentID,$instructorID,$sportID,$slotName,$day);
+                $query->execute();
+            }
+
+            elseif($this->entity_type=='Officer'){
+                $memberID=$this->entity->getMemberId();
+                $roles=$this->entity->getRoles();
+                $appointedDate=$this->entity->getAppointedDate();
+
+                $query=$link->prepare("INSERT INTO officer(s_id,appointed_date,roles) VALUES (?,?,?)");
+                $query->bind_param("iss",$memberID,$appointedDate,$roles);
+                $query->execute();
 
             }
            // $db->executeQuery($query);

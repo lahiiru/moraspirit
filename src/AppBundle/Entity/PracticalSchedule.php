@@ -11,74 +11,93 @@ namespace AppBundle\Entity;
 
 class PracticalSchedule
 {
-    protected  $timeslotid;
-    protected $nic;
-    protected $sportid;
-    protected $studentis;
+    protected $studentID;
+    protected $instructorID;
+    protected $sportID;
+    protected $sportName;
+    protected $day;
 
     /**
      * @return mixed
      */
-    public function getTimeslotid()
+    public function getStudentID()
     {
-        return $this->timeslotid;
+        return $this->studentID;
     }
 
     /**
-     * @return mixed
+     * @param mixed $studentID
      */
-    public function getNic()
+    public function setStudentID($studentID)
     {
-        return $this->nic;
-    }
-
-    /**
-     * @param mixed $nic
-     */
-    public function setNic($nic)
-    {
-        $this->nic = $nic;
+        $this->studentID = $studentID;
     }
 
     /**
      * @return mixed
      */
-    public function getSportid()
+    public function getInstructorID()
     {
-        return $this->sportid;
+        return $this->instructorID;
     }
 
     /**
-     * @param mixed $sportid
+     * @param mixed $instructorID
      */
-    public function setSportid($sportid)
+    public function setInstructorID($instructorID)
     {
-        $this->sportid = $sportid;
+        $this->instructorID = $instructorID;
     }
 
     /**
      * @return mixed
      */
-    public function getStudentis()
+    public function getSportID()
     {
-        return $this->studentis;
+        return $this->sportID;
     }
 
     /**
-     * @param mixed $studentis
+     * @param mixed $sportID
      */
-    public function setStudentis($studentis)
+    public function setSportID($sportID)
     {
-        $this->studentis = $studentis;
+        $this->sportID = $sportID;
     }
 
     /**
-     * @param mixed $timeslotid
+     * @return mixed
      */
-    public function setTimeslotid($timeslotid)
+    public function getSportName()
     {
-        $this->timeslotid = $timeslotid;
+        return $this->sportName;
     }
+
+    /**
+     * @param mixed $sportName
+     */
+    public function setSportName($sportName)
+    {
+        $this->sportName = $sportName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * @param mixed $day
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+    }
+
+
 
 
 
