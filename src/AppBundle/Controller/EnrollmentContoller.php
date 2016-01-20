@@ -14,7 +14,9 @@ use AppBundle\Form\Type\DynamicAllocationType;
 use AppBundle\Form\Type\EnrollmentType;
 use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\ResourceAccess;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -25,7 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class EnrollmentContoller extends  Controller
 {
     /**
-     * @Route("/enrollment", name="enrool")
+     * @Route("/enrollment", name="enroll")
      */
 
     public function enrollAction(Request $request){
@@ -40,10 +42,12 @@ class EnrollmentContoller extends  Controller
             $result=$form->getData();
             if($result['type']='sport')
             {
+                return new RedirectResponse($this->generateUrl('enroll_event'));
 
             }
-            elseif($result['type']='social'){
 
+            elseif($result['type']='social'){
+                return new RedirectResponse($this->generateUrl('enroll_sport'));
             }
 
         }
@@ -55,6 +59,34 @@ class EnrollmentContoller extends  Controller
 
 
     }
+
+
+    /**
+     * @Route("/enrollment/event", name="enroll_event")
+     */
+
+    public function eventenrollAction(){
+
+        return $this->render('Profile/profile.html.twig'
+        );
+
+
+    }
+
+    /**
+     * @Route("/enrollment/sport", name="enroll_sport")
+     */
+
+    public function sportenrollAction(){
+
+
+    }
+
+    private function  getEvent(){
+
+    }
+
+
 
 
     public function create1Action(Request $request)
@@ -87,5 +119,7 @@ class EnrollmentContoller extends  Controller
 
         return $response;
     }
+
+
 
 }

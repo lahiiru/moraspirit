@@ -20,9 +20,8 @@ class ReserveResourceType extends  AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Non'=>'NON',
-                'Sport Equipment' => 'EQP',
-                'ROOM' => 'ROOM',
+                'Sport Equipment' => 'SEQP',
+                'ROOM' => 'OTHER',
             )
         ));
     }
