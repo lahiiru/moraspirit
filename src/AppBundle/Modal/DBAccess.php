@@ -212,7 +212,7 @@ class DBAccess
                 $typeId=$this->entity->getTypeId();
                 $value=$this->entity->getValue();
 
-                $query=$link->prepare("INSERT INTO rosource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
+                $query=$link->prepare("INSERT INTO resource_registration(category,description,registration_date,type_id,value) VALUES (?,?,?,?,?)");
                 $query->bind_param("sssii",$category,$description,$registrationDate,$typeId,$value);
                 $query->execute();
             }
