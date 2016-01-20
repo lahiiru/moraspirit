@@ -53,7 +53,20 @@ public static function getResourceAvalability($category){
 
     }
     public  static function getOfficer(){
-        return array('Saman'=>1, 'Nimal'=>4 );
+        $db=new DBConnection();
+        $link =  $db->connect();
+        if($link != null) {
+            $query = "SELECT concat(member.first_name,\" \",member.last_name) AS name,officer.id FROM officer INNER JOIN member ON officer.id = member.id";
+            $result = $link->query($query);
+            $result_array=array();
+            while($row = mysqli_fetch_assoc($result)){
+                $result_array[$row['name']]=$row['id'];
+            }
+            $db->closeConnection();
+            return $result_array;
+        }
+        $db->closeConnection();
+        return null;
     }
 
 
