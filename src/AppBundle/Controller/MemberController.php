@@ -47,14 +47,14 @@ class MemberController extends  Controller
             ECHO Var_dump($db->insert());
             if(!$db->insert()){
                 return $this->render('default/index.html.twig', array(
-                    'form' => $form->createView() , 'title'=>$title ,'table'=>false, "error_description"=>"A member with entered email is already exists."
+                    'form' => $form->createView() , 'title'=>$title ,'table'=>false, "error_description"=>"A member with entered email is already exists." , 'profile'=>false
                 ));
             }
 
         }
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title ,'table'=>false
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false , 'profile'=>false
         ));
 
 

@@ -37,22 +37,28 @@ class PermissionController extends  Controller
     public  function  setPermissionAction(Request $request){
 
         $data=array();
+        $title= "Set Permission";
         $form = $this->createForm(SetPermissionType::class, $data);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+           var_dump($form->getData());
+            $newdata=$form->getData();
+            if(!($newdata["o_id"]==null)){
+
+            }
 
 
         }
 
 
-        $title= "Set Permission";
+
 
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title ,'table'=>false
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>true
         ));
 
 

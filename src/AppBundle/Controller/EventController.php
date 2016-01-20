@@ -52,7 +52,7 @@ class EventController extends  Controller
         }
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title ,'table'=>false
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>false
         ));
     }
 

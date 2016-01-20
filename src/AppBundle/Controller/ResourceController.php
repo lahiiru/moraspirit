@@ -83,7 +83,7 @@ class ResourceController extends  Controller
         }
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false
+            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false , 'profile'=>false
         ));
 
 

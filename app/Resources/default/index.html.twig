@@ -57,6 +57,46 @@
         </script>
 {% endblock script %}
 
+    {% block  profileroot %}
+        {%  if profile == true %}
+        <section class="content">
+
+            <div class="row">
+                <div >
+
+                    <!-- Profile Image -->
+                    <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <img class="profile-user-img img-responsive img-circle" src="{{ asset('bundles/dist/img/'~ app.user.username ~'.jpg') }}" alt="User profile picture">
+
+                            <h3 class="profile-username text-center">M.N.S Perera</h3>
+
+                            <p class="text-muted text-center">System Administrator</p>
+
+                            <ul class="list-group list-group-unbordered">
+                                <li class="list-group-item">
+                                    <b>nisgha56@gmail.com</b> <a class="pull-right"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>0772080907</b> <a class="pull-right"></a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>No 56, Katuwawala Road ,Maharagama </b> <a class="pull-right"></a>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+    {% endblock  profileroot%}
+
+
     {%  block root %}
 
 

@@ -31,12 +31,16 @@ class SetPermissionType  extends  AbstractType
     {
         $builder
 
-            ->add('userid', ReserveResourceType::class ,['label'=>'User Name'])
+            ->add('o_id', ChoiceType::class, array(
+                'mapped'  => true,
+                'choices' =>  ResourceAccess::getOfficer(),
+                'label'=>'Officer Name'
+            ))
             ->add('save', SubmitType::class, ['label' => 'Search']);
             $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
                 $form=$event->getForm();
                 $form->remove('save', SubmitType::class, ['label' => 'Search']);
-                $form->add('type')
+                $form->add('type',PermissionType::class,['label' => 'Permission'])
                 ->add('save', SubmitType::class, ['label' => 'Apply']);
 
             });
