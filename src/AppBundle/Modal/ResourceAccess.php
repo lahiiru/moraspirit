@@ -21,10 +21,10 @@ public static function getResourceAvalability($category){
         $query = "SELECT rt.type_id,rt.name,rt.available_quantity FROM resource_registration rr INNER JOIN resource_type rt ON rr.type_id = rt.type_id WHERE rr.category = '".$category."'";
         $result = $link->query($query);
         $result_array=array();
+        $index=0;
         while($row = mysqli_fetch_assoc($result)){
-            $temp_array = array();
-            $temp_array[$row['name']]=$row['available_quantity'];
-            $result_array[$row['type_id']]= $temp_array;
+            $result_array[$index] = $row;
+            $index = $index+1;
         }
         $db->closeConnection();
         return $result_array;
