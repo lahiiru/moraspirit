@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints\Date;
 class EventCalendarController extends Controller{
 
     /**
-     * @Route("/calendar", name="user_profile")
+     * @Route("/calendar", name="calendar")
      *
      */
     public  function  calenderAction(){

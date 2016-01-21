@@ -14,6 +14,7 @@ use AppBundle\Form\Type\SportType;
 use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -35,6 +36,7 @@ class SportController extends  Controller
 
             $db= new DBAccess($sport);
             $db->insert();
+            return new RedirectResponse($this->generateUrl('sport_register'));
         }
 
         return $this->render('default/index.html.twig', array(

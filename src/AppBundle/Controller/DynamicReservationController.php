@@ -120,6 +120,7 @@ class DynamicReservationController extends  Controller
 
             $db=new DBAccess($task);
             $db->insert();
+            return new RedirectResponse($this->generateUrl('reserve'));
 
 
 

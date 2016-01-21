@@ -13,6 +13,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Modal\DBAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\Type\EventType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -49,6 +50,7 @@ class EventController extends  Controller
 
             $db= new DBAccess($event);
             $db->insert();
+            return new RedirectResponse($this->generateUrl('event_register1S'));
         }
 
         return $this->render('default/index.html.twig', array(
