@@ -76,7 +76,7 @@ public static function getResourceAvalability($category){
         $db=new DBConnection();
         $link =  $db->connect();
         if($link != null) {
-            $roles = serialize($role);
+            $roles = serialize(array($role));
             $sql = "UPDATE `app_user` SET `role`='" . $roles . "'  WHERE id='" . $userid . "'";
             $link->query($sql);
             $db->closeConnection();
