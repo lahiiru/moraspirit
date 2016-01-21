@@ -139,7 +139,7 @@
                         <i class="fa fa-dashboard"></i> <span>Home</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="{{ path('user_profile') }}"><i class="fa fa-circle-o"></i> Profile</a></li>
+                        <li class="active"><a href="{{ path('p') }}"><i class="fa fa-circle-o"></i> Profile</a></li>
                         <li><a><i class="fa fa-circle-o"></i> Timeline</a></li>
                     </ul>
                 </li>
@@ -152,8 +152,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ path('reserve') }}"><i class="fa fa-circle-o"></i> Reserve Resource</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i>Apply For Tranning</a></li>
-                        <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Apply For Event</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i>Apply For Tranning</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Apply For Event</a></li>
                     </ul>
                 </li>
                 {% if 'ROLE_ADMIN' in app.user.roles  %}
@@ -161,13 +161,12 @@
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Registration</span>
-                            <span class="label label-primary pull-right">4</span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/student_registration"><i class="fa fa-circle-o"></i>Student Registration</a></li>
-                            <li><a href="/instructor_registration"><i class="fa fa-circle-o"></i>Instructor Registration</a></li>
-                            <li><a href="/resource_registration"><i class="fa fa-circle-o"></i>New Resource Registration </a></li>
-
+                            <li><a href="{{ path('student_check') }}"><i class="fa fa-circle-o"></i>Student Registration</a></li>
+                            <li><a href="{{ path('permission') }}"><i class="fa fa-circle-o"></i>Grant permissions</a></li>
+                            <li><a href="{{ path('resourceregistration') }}"><i class="fa fa-circle-o"></i>Resource Registration </a></li>
+                            <li><a href="{{ path('new_esource_type_registration') }}"><i class="fa fa-circle-o"></i>Resource Type Registration </a></li>
                         </ul>
                     </li>
 
@@ -176,29 +175,24 @@
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                         <span>Sports</span>
-                        <span class="label label-primary pull-right">4</span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Time Table</a></li>
-
-
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Time Table</a></li>
                     </ul>
                 </li>
 
 
                 <li>
-                    <a href="pages/widgets.html">
+                    <a href="#">
                         <i class="fa fa-th"></i>
                         <span>Events</span>
-                        <small class="label pull-right bg-green">new</small>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>Create New Event</a></li>
-                        <li><a ><i class="fa fa-circle-o"></i>Current Event</a></li>
-                        <li><a><i class="fa fa-circle-o"></i>Privious Event</a></li>
+                        <li><a href="{{ path('event_register1S') }}"><i class="fa fa-circle-o"></i>Create New Event</a></li>
+                        <li><a ><i class="#"></i>Current Events</a></li>
+                        <li><a><i class="#"></i>Previous Events</a></li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="{{ path("calendar") }}">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
