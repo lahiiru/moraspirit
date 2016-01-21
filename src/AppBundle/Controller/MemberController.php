@@ -12,45 +12,72 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Member;
 use AppBundle\Form\Type\MemberType;
 use AppBundle\Modal\DBAccess;
+use AppBundle\Modal;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class MemberController extends  Controller
 {
     /**
-     * @Route("/register/member", name="student_nregistration")
+     * @Route("/register/member/check", name="student_check")
      */
-    public function newmemberAction(Request $request)
+    public function checkMemberAction(Request $request){
+        $data = array();
+        $err = $request->query->get('error_description');
+        $form = $this->createFormBuilder($data)
+            ->add('email_check', EmailType::class, ['label' => "Enter the email first"])
+            ->add('Check',SubmitType::class, ['label' => "Check"])
+            ->getForm();
+
+        $form->handleRequest($request);
+        $params = array(
+                    'form' => $form->createView() ,
+                    'title'=>"Member registration" ,
+                    'table'=>false,
+                    'profile'=>false
+                 );
+        if($err!=null){
+            $params=array_merge($params,['error_description'=>$err]);
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $r=new Modal\DBQuery();
+            $t=$r->isEmailPresent($form->getData()['email_check']);
+            if(!$t){
+                return $this->redirect($this->generateUrl('student_nregistration', array('email' => $form->getData()['email_check'])));
+            }else{
+                $params=array_merge($params,['error_description'=>'Email is not available']);
+            }
+
+        }
+        var_dump($params);
+        return $this->render('default/index.html.twig', $params);
+    }
+    /**
+     * @Route("/register/member/{email}", name="student_nregistration")
+     */
+    public function newmemberAction(Request $request,$email)
     {
-
-
-        // create a task and give it some dummy data for this example
         $member = new Member();
+        $member ->setEmail($email);
         $title= "Student Registration";
         $date=date("Y-m-d") ;
         $member->setRegisterDate($date);
         $form = $this->createForm(MemberType::class, $member);
 
-        /*$form->add('register_date', TextType::class, array(
-            'label' => 'no','label_attr'=> array('style'=>'display: none;'),
-            'attr'  => array('style'=>'display: none;')
-        ));*/
-
-
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $db= new DBAccess($member);
-            ECHO Var_dump($db->insert());
-            if(!$db->insert()){
-                return $this->render('default/index.html.twig', array(
-                    'form' => $form->createView() , 'title'=>$title ,'table'=>false, "error_description"=>"A member with entered email is already exists." , 'profile'=>false
-                ));
+            $id=$db->insert();
+            if(!$id){
+                return $this->redirect($this->generateUrl('student_check', array('error_description'=>'Email is not available')));
+            }else{
+                return $this->redirect($this->generateUrl('student_check', array('error_description'=>'New member added with DI '.$id)));
             }
-
         }
 
         return $this->render('default/index.html.twig', array(
@@ -59,5 +86,6 @@ class MemberController extends  Controller
 
 
     }
+
 
 }

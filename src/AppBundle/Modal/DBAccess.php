@@ -151,22 +151,24 @@ class DBAccess
                 $password='$2y$13$0aW6zsmFJEZKWgS8o5kK..U3KOP6mWC6rBl9VLPvEMuH6j8/1mLlO';
                 $roles='a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:9:"ROLE_USER";}';
                 $isActice=1;
-
-
+                $last_id = null;
                 mysqli_autocommit($link,FALSE);
-
+                try{
+                    mysqli_begin_transaction($link);
                     $query = $link->prepare("INSERT INTO member (first_name,last_name,dept_name,register_date,email,mobile,gender,faculty_name,birthday,bloodgroup,NIC,address,index_no) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                    $val=$query->bind_param("sssssssssssss", $FirstName, $LastName, $DeptName, $RegisterDate, $Email, $Mobile, $Gender, $Facultyname, $Birthday, $Bloodgroup, $Nic, $Address, $IndexNu);
-                    $val->execute();
+                    $query->bind_param("sssssssssssss", $FirstName, $LastName, $DeptName, $RegisterDate, $Email, $Mobile, $Gender, $Facultyname, $Birthday, $Bloodgroup, $Nic, $Address, $IndexNu);
+                    $query->execute();
 
 
                     $last_id = mysqli_insert_id($link);
                     $result=mysqli_query($link, "INSERT INTO app_user(id,email,password,role,is_active) VALUES($last_id,'" . $Email . "','" . $password . "','" . $roles . "','" . $isActice . "')");
-                    $result->execute();
                     mysqli_commit($link);
 
-                    return !$this->error;
-
+                    return $last_id;
+                }catch(Exception $e){
+                    mysqli_rollback($link);
+                    return null;
+                }
 
             }
 
