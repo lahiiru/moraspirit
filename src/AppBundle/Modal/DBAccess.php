@@ -52,6 +52,9 @@ class DBAccess
                 case 'AppBundle\Entity\NewResourceType':
                     $this->entity_type = 'NewResourceType';
                     break;
+                case 'AppBundle\Entity\Sport':
+                    $this->entity_type = 'Sport';
+                    break;
 
 
             }
@@ -257,6 +260,13 @@ class DBAccess
             elseif ($this->entity_type=='NewResourceType')
             {
                 mysqli_report(MYSQLI_REPORT_ALL);
+                $name=$this->entity->getName();
+                $oid=$this->entity->getOId();
+
+                $query=$link->prepare("INSERT INTO `resource_type`(`name`, `tot_items`, `available_quantity`, `pending_quantity`, `reserved_quantity`, `o_id`) VALUES (?,0,0,0,0,?)");
+                $query->bind_param("si",$name,$oid);
+                $query->execute();
+
                 
 
             }

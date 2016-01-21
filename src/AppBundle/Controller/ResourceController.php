@@ -76,12 +76,14 @@ class ResourceController extends  Controller
 
 
             $db= new DBAccess($resource);
+            $db->insert();
+
 
 
         }
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false
+            'form' => $form->createView(),'title'=>$formtitle ,'table'=>false , 'profile'=>false
         ));
 
 

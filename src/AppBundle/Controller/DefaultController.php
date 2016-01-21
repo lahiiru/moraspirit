@@ -43,54 +43,8 @@ class DefaultController extends Controller
 
 
 
-    /**
-     * @Route("/resourse_allocation", name="home")
-     */
-    public function resourceAllocation(Request $request)
-    {
-        // create a task and give it some dummy data for this example
-        $resourceallocation = new DynamicAllocation();
-        $title= "Resource Allocation";
-        $form = $this->createForm(ResourceAllocType::class, $resourceallocation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $db= new DBAccess($resourceallocation);
-            $db->insert();
-
-        }
-
-        return $this->render('default/new.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title
-        ));
-
-    }
 
 
-
-    /**
-     * @Route("/instructor_registration", name="instructor_registration")
-     */
-
-    public  function  instructorAction(Request $request){
-        $instuctor =new Instructor();
-        $formtitle="Instructor Registration";
-
-        $form = $this->createForm(InstructorType::class, $instuctor);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $db= new DBAccess($instuctor);
-            $db->insert();
-
-        }
-
-        return $this->render('default/index.html.twig', array(
-            'form' => $form->createView(),'title'=>$formtitle , 'table'=>false
-        ));
-
-
-    }
 
 
 
