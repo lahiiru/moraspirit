@@ -9,9 +9,6 @@
 namespace AppBundle\Modal;
 
 
-$r=new DBQuery();
-$t=$r->isEmailPresent("nimal@gmail.com");
-echo $t;
 
 class DBQuery
 {
@@ -34,5 +31,8 @@ class DBQuery
         }
         $this->db->closeConnection();
     }
+
+
+
 
 }

@@ -43,12 +43,21 @@ class PermissionController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-           var_dump($form->getData());
+            
             $newdata=$form->getData();
-            if(!($newdata["o_id"]==null)){
+            if(!($newdata["o_id"]==null)&&$newdata["type"]==null){
 
+                return $this->render('default/index.html.twig', array(
+                    'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>true
+                ));
             }
+           elseif(!($newdata["type"]==null))
+           {
+               ResourceAccess::updateRole($newdata["o_id"],$newdata["type"]);
+
+
+           }
+
 
 
         }
@@ -58,7 +67,7 @@ class PermissionController extends  Controller
 
 
         return $this->render('default/index.html.twig', array(
-            'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>true
+            'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>false
         ));
 
 

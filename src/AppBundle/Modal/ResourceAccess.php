@@ -71,5 +71,21 @@ public static function getResourceAvalability($category){
         return null;
       }
 
+    public static function updateRole($userid,$role ){
+
+        $db=new DBConnection();
+        $link =  $db->connect();
+        if($link != null) {
+            $roles = serialize($role);
+            $sql = "UPDATE `app_user` SET `role`='" . $roles . "'  WHERE id='" . $userid . "'";
+            $link->query($sql);
+            $db->closeConnection();
+
+        }
+
+
+
+    }
+
 
 }
