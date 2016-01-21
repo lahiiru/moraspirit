@@ -221,12 +221,13 @@ class DBAccess
                 $description = $obj->getDescription();
                 $location = $obj->getLocation();
                 $eventIncharge = $obj->getEventIncharge();
+
                 // Set autocommit to off
                 mysqli_autocommit($link,FALSE);
                 mysqli_query($link,"INSERT INTO event (event_name,tot_participants,event_type,start_date,end_date,start_time,end_time,budget,description,location)
                 VALUES ('".$eName."','".$tParticipants."','".$eType."','".$startDate."','".$endDate."','".$startTime."','".$endTime."','".$budget."','".$description."','".$location."')");
                 $last_id = mysqli_insert_id($link);
-                mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$last_id."','".$eventIncharge."')");
+                mysqli_query($link,"INSERT INTO event_incharge (o_id,event_id) VALUES ('".$eventIncharge."','".$last_id."')");
                 mysqli_commit($link);
             }
             elseif($this->entity_type=='Resource'){

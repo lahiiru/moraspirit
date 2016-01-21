@@ -71,11 +71,6 @@
 
                 /* initialize the calendar
                  -----------------------------------------------------------------*/
-                //Date for the calendar events (dummy data)
-                var date = new Date();
-                var d = date.getDate(),
-                        m = date.getMonth(),
-                        y = date.getFullYear();
 
                 var jsonObj = {
                     header: {
@@ -89,7 +84,7 @@
                         week: 'week',
                         day: 'day'
                     },
-                    //Random default events
+                    //events
                     events: [
 
                     ],
@@ -123,7 +118,6 @@
                 };
 
                 {% for event in eventlist %}
-                    console.log("{{ event.event_name }}");
                     var obj = {
                         title: "{{ event.event_name }}" ,
                         start: new Date("{{ event.start_date }}"),
@@ -170,11 +164,14 @@
 
                     //Remove event from text input
                     $("#new-event").val("");
+
                 });
             });
 
-
-
+            
+            $(window).load(function() {
+                $('.fc-time').text('');
+            });
         </script>
 
 

@@ -20,7 +20,6 @@ class Event
     protected $endtime;
     protected $location;
     protected $description;
-    protected  $date;
     protected $totalparticipant;
     protected $eventIncharge;
     protected $daterange;
@@ -204,21 +203,6 @@ class Event
         $this->budget = $budget;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-    }
 
     /**
      * @return mixed
