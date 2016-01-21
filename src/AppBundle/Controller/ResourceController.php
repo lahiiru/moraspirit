@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceController extends  Controller
@@ -40,6 +41,7 @@ class ResourceController extends  Controller
             $resource->setRegDate(date("Y-m-d") );
 
             $db->insert();
+            return new RedirectResponse($this->generateUrl('resourceregistration'));
 
         }
 
@@ -77,6 +79,7 @@ class ResourceController extends  Controller
 
             $db= new DBAccess($resource);
             $db->insert();
+            return new RedirectResponse($this->generateUrl('new_esource_type_registration'));
 
 
 

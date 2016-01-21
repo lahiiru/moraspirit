@@ -15,6 +15,8 @@ use AppBundle\Form\Type\EnrollmentType;
 use AppBundle\Modal\DBAccess;
 use AppBundle\Modal\ResourceAccess;
 use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,12 +67,28 @@ class EnrollmentContoller extends  Controller
      * @Route("/enrollment/event", name="enroll_event")
      */
 
-    public function eventenrollAction(){
+    public function eventenrollAction(Request $request)
+    {
 
-        return $this->render('Profile/profile.html.twig'
-        );
+        $event = array();
+        $form = $this->createFormBuilder($event)
+            ->add('event_id', ChoiceType::class, array(
+                'mapped' => true,
+                'choices' => $this->getEvent(),
+                'label' => 'Event Name'
+            ))
+
+            ->add('save', SubmitType::class, ['label' => 'Attemt'])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->render('Profile/profile.html.twig'
+            );
 
 
+        }
     }
 
     /**

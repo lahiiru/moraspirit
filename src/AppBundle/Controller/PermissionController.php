@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,7 +55,7 @@ class PermissionController extends  Controller
            elseif(!($newdata["type"]==null))
            {
                ResourceAccess::updateRole($newdata["o_id"],$newdata["type"]);
-
+               return new RedirectResponse($this->generateUrl('permission'));
 
            }
 
@@ -70,23 +71,6 @@ class PermissionController extends  Controller
             'form' => $form->createView() , 'title'=>$title ,'table'=>false ,'profile'=>false
         ));
 
-
-    }
-
-    /**
-     * Creates a new Demo entity.
-     *
-     * @Route("/getdata", name="getdata")
-     * @Method("POST")
-     *
-     */
-
-    public  function  getAction(){
-
-        return new JsonResponse(array('message' => 'Success!'), 200);
-    }
-
-    private function getdetail(){
 
     }
 
