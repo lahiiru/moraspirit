@@ -108,7 +108,7 @@ public static function getResourceAvalability($category){
         $db=new DBConnection();
         $link =  $db->connect();
         if($link != null) {
-            $query = "SELECT concat(first_name,\" \",last_name) , gender , email ,mobile   FROM member WHERE id ='".$id."'";
+            $query = "SELECT concat(first_name,\" \",last_name) AS name  , gender , email ,mobile   FROM member WHERE id ='".$id."'";
             $result = $link->query($query);
 
 

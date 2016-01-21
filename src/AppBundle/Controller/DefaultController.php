@@ -61,13 +61,11 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/p", name="homeddf")
+     * @Route("/p", name="p")
      */
 
 
     public  function  profileAction(){
-       // $user = $this->get('security.token_storage')->getToken()->getUser();
-
 
         return $this->render('Profile/profile.html.twig'
          );
