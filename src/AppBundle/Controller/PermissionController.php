@@ -43,7 +43,7 @@ class PermissionController extends  Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $newdata=$form->getData();
             if(!($newdata["o_id"]==null)&&$newdata["type"]==null){
 

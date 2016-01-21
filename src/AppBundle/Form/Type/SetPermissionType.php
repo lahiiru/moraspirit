@@ -33,7 +33,7 @@ class SetPermissionType  extends  AbstractType
 
             ->add('o_id', ChoiceType::class, array(
                 'mapped'  => true,
-                'choices' =>  ResourceAccess::getOfficer(),
+                'choices' =>  ResourceAccess::getMembers(),
                 'label'=>'Officer Name'
             ))
             ->add('save', SubmitType::class, ['label' => 'Search']);
