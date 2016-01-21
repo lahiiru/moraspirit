@@ -104,4 +104,19 @@ public static function getResourceAvalability($category){
         return null;
     }
 
+    public static function getMemberDetail($id){
+        $db=new DBConnection();
+        $link =  $db->connect();
+        if($link != null) {
+            $query = "SELECT concat(first_name,\" \",last_name) , gender , email ,mobile   FROM member WHERE id ='".$id."'";
+            $result = $link->query($query);
+
+
+            $db->closeConnection();
+            return $result;
+        }
+        $db->closeConnection();
+        return null;
+    }
+
 }

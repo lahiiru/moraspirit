@@ -46,7 +46,7 @@ class DynamicReservationController extends  Controller
 
 
             if($result->getCatogory()=='SEQP'){
-                return new RedirectResponse($this->generateUrl('reserve_sport'));
+                return new RedirectResponse($this->generateUrl('reserve_sport') );
 
             }
 
@@ -120,7 +120,7 @@ class DynamicReservationController extends  Controller
 
             $db=new DBAccess($task);
             $db->insert();
-            return new RedirectResponse($this->generateUrl('reserve'));
+            return new RedirectResponse($this->generateUrl('reserve') ,array('error_description'=>'you are successfully completed your action'));
 
 
 

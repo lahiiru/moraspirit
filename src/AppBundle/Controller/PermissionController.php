@@ -55,7 +55,7 @@ class PermissionController extends  Controller
            elseif(!($newdata["type"]==null))
            {
                ResourceAccess::updateRole($newdata["o_id"],$newdata["type"]);
-               return new RedirectResponse($this->generateUrl('permission'));
+               return new RedirectResponse($this->generateUrl('permission'), array('error_description'=>'you are successfully completed your action'));
 
            }
 

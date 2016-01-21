@@ -36,7 +36,7 @@ class SportController extends  Controller
 
             $db= new DBAccess($sport);
             $db->insert();
-            return new RedirectResponse($this->generateUrl('sport_register'));
+            return new RedirectResponse($this->generateUrl('sport_register'),  array('error_description'=>'you are successfully completed your action'));
         }
 
         return $this->render('default/index.html.twig', array(

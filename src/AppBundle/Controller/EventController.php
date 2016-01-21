@@ -50,7 +50,7 @@ class EventController extends  Controller
 
             $db= new DBAccess($event);
             $db->insert();
-            return new RedirectResponse($this->generateUrl('event_register1S'));
+            return new RedirectResponse($this->generateUrl('event_register1S'), array('error_description'=>'you are successfully completed your action'));
         }
 
         return $this->render('default/index.html.twig', array(

@@ -41,7 +41,7 @@ class ResourceController extends  Controller
             $resource->setRegDate(date("Y-m-d") );
 
             $db->insert();
-            return new RedirectResponse($this->generateUrl('resourceregistration'));
+            return new RedirectResponse($this->generateUrl('resourceregistration'), array('error_description'=>'you are successfully completed your action'));
 
         }
 
@@ -79,7 +79,7 @@ class ResourceController extends  Controller
 
             $db= new DBAccess($resource);
             $db->insert();
-            return new RedirectResponse($this->generateUrl('new_esource_type_registration'));
+            return new RedirectResponse($this->generateUrl('new_esource_type_registration'), array('error_description'=>'you are successfully completed your action'));
 
 
 
