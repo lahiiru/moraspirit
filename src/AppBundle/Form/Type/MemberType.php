@@ -31,7 +31,7 @@ class MemberType extends  AbstractType
 
 
         $builder
-            ->add('email', EmailType::class ,array('label'=>'Email' , 'label_attr'=>array('for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('disabled'=>'disabled','class'=>'form-control','placeholder'=>'Enter Email')))
+            ->add('email', EmailType::class ,array('label'=>'Email' , 'label_attr'=>array('for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array("readonly"=>"readonly",'class'=>'form-control','placeholder'=>'Enter Email')))
             ->add('first_name', TextType::class ,array('label'=>'First Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
             ->add('last_name', TextType::class , array('label'=>'Last Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
             ->add('gender', GenderType::class , array('label'=>'Gender' , 'attr'=>array('class'=>"form-control select2" )))

@@ -53,7 +53,6 @@ class MemberController extends  Controller
             }
 
         }
-        var_dump($params);
         return $this->render('default/index.html.twig', $params);
     }
     /**
