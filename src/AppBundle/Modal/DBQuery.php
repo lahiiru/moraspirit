@@ -8,11 +8,11 @@
 
 namespace AppBundle\Modal;
 
-
+/*
 $r=new DBQuery();
 $t=$r->isEmailPresent("nimal@gmail.com");
 echo $t;
-
+*/
 class DBQuery
 {
     private $link;
@@ -24,13 +24,17 @@ class DBQuery
     }
     public function isEmailPresent($email){
         $index=null;
-        $sql="SELECT id FROM members WHERE email='".$email."'";
+        $sql="SELECT id FROM app_user WHERE email='".$email."'";
         $index=$this->link->query($sql);
-        if($index!=null){
-            return 1;
+        $result_array=array();
+        while($row = mysqli_fetch_assoc($index)){
+            array_push($result_array,$row);
+        }
+        if(!empty($result_array)){
+            return true;
         }
         else{
-            return 0;
+            return false;
         }
         $this->db->closeConnection();
     }

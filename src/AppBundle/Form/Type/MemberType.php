@@ -31,6 +31,7 @@ class MemberType extends  AbstractType
 
 
         $builder
+            ->add('email', EmailType::class ,array('label'=>'Email' , 'label_attr'=>array('for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('disabled'=>'disabled','class'=>'form-control','placeholder'=>'Enter Email')))
             ->add('first_name', TextType::class ,array('label'=>'First Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ), 'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter First Name')))
             ->add('last_name', TextType::class , array('label'=>'Last Name' , 'label_attr'=>array( 'for'=>'inputEmail3' ,'class'=>'col-sm-2 control-label'),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Last Name')))
             ->add('gender', GenderType::class , array('label'=>'Gender' , 'attr'=>array('class'=>"form-control select2" )))
@@ -46,7 +47,6 @@ class MemberType extends  AbstractType
             ->add('dept_name', TextType::class , array('label'=>'Department Name','attr'=>array('class'=>'form-control' ,)))
             ->add('nic', TextType::class ,array('label'=>'NIC Number' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter NIC')))
             ->add('mobile', TextType::class ,array('label'=>'Mobile Number' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control','data-inputmask'=>'&quot;mask&quot;: &quot;(999) 999-9999&quot;' ,'data-mask'=>'')))
-            ->add('email', EmailType::class ,array('label'=>'Email' , 'label_attr'=>array( 'for'=>"inputEmail3", 'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control','placeholder'=>'Enter Email')))
             ->add('address', TextType::class ,array('label'=>'Address' , 'label_attr'=>array( 'for'=>"inputEmail3" ,'class'=>"col-sm-2 control-label"),'attr'=>array('class'=>'form-control' , 'placeholder'=>'Enter Addressr')))
             ->add('save', SubmitType::class, array('label' => 'Submit', 'attr'  => array('class' => 'btn btn-block btn-success' ,'style'=>"height:50px;width:100px")));
         ;
