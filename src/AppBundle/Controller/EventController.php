@@ -45,7 +45,7 @@ class EventController extends  Controller
             $event->setStarttime($event->getStarttime()->getTimestamp());
             $event->setEndtime( $event->getEndtime()->getTimestamp());
 
-           // var_dump($event);
+            var_dump($event);
 
             $db= new DBAccess($event);
             $db->insert();
