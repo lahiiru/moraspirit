@@ -13,14 +13,28 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class DBConnection
 {
-    private $username = 'root';
-    private $password = '1234';
+    private $username ;
+    private $password ;
     private $host = 'localhost';
     private $database_name = 'moraspirit';
 
     private $con = null;
 
-    public function connect(){
+    public function connect($role = "none"){
+        if($role = 'ROLE_ADMIN'){
+            $this->username = 'admin';
+            $this->password ='1234';
+        }elseif($role = 'ROLE_MEMBER'){
+            $this->username = 'member';
+            $this->password ='1234';
+        }elseif($role = 'ROLE_OFFICER'){
+            $this->username = 'officer';
+            $this->password ='1234';
+        }else{
+            $this->username = 'root';
+            $this->password ='';
+        }
+
         $link = mysqli_connect($this->host,$this->username,$this->password,$this->database_name);
         if(empty($link)){
             return  null;
