@@ -32,7 +32,7 @@ class DBConnection
             $this->password ='1234';
         }else{
             $this->username = 'root';
-            $this->password ='';
+            $this->password ='1234';
         }
 
         $link = mysqli_connect($this->host,$this->username,$this->password,$this->database_name);
